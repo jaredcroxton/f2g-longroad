@@ -892,7 +892,7 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
 
           <label class="calc-lbl" for="calcLitres">Diesel used <span id="periodLbl">per month</span></label>
           <div class="calc-input">
-            <input type="number" id="calcLitres" value="20000" min="0" step="100" inputmode="numeric" aria-describedby="periodLbl">
+            <input type="number" id="calcLitres" value="500000" min="0" step="1000" inputmode="numeric" aria-describedby="periodLbl">
             <span class="calc-unit">LITRES</span>
           </div>
           <div class="calc-preset" id="calcPresets"></div>
@@ -1396,7 +1396,7 @@ document.querySelectorAll('.section').forEach(function(s){ io.observe(s); });
       CO2_PER_L = 2.72;
   var yearly = false;
 
-  var PRESETS = { month: [5000, 10000, 20000, 50000], year: [60000, 120000, 250000, 600000] };
+  var PRESETS = [1000000, 900000, 800000, 750000, 500000];
 
   function fmt(n, dp){
     return n.toLocaleString('en-AU', { minimumFractionDigits: dp || 0, maximumFractionDigits: dp || 0 });
@@ -1424,7 +1424,7 @@ document.querySelectorAll('.section').forEach(function(s){ io.observe(s); });
   function presets(){
     var wrap = document.getElementById('calcPresets'); if (!wrap) return;
     wrap.innerHTML = '';
-    PRESETS[yearly ? 'year' : 'month'].forEach(function(v){
+    PRESETS.forEach(function(v){
       var b = document.createElement('button');
       b.type = 'button';
       b.textContent = fmt(v) + ' L';
