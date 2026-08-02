@@ -367,6 +367,102 @@ header.on-light .head-phone{text-shadow:none}
 }
 /* ===================== end CASE STACK ====================== */
 
+/* ============ SAVINGS CALCULATOR ============ */
+#calc{background:var(--ink);color:var(--ivory);padding:clamp(64px,9vh,120px) clamp(20px,6vw,90px)}
+#calc .display{font-size:clamp(38px,5vw,80px);color:#fff}
+#calc .kick-c{color:var(--gold-hot)}
+#calc .lede{color:rgba(244,243,239,.72);max-width:520px;margin-top:14px;font-size:clamp(14.5px,1.15vw,17px)}
+.calc-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(22px,3.4vw,56px);margin-top:clamp(30px,4vw,54px);align-items:start}
+
+/* --- controls --- */
+.calc-panel{background:rgba(244,243,239,.04);border:1px solid rgba(244,243,239,.14);padding:clamp(18px,2.2vw,30px)}
+.calc-seg{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid rgba(244,243,239,.3);margin-bottom:22px}
+.calc-seg button{
+  background:none;border:0;cursor:pointer;padding:13px 8px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(244,243,239,.6);transition:background .3s,color .3s;
+}
+.calc-seg button.on{background:var(--gold);color:var(--ink);font-weight:500}
+.calc-lbl{display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:rgba(244,243,239,.55);margin-bottom:8px}
+.calc-input{position:relative;margin-bottom:22px}
+.calc-input input[type=number]{
+  width:100%;background:rgba(3,13,48,.6);border:1px solid rgba(244,243,239,.22);
+  color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;
+  font-size:clamp(30px,3.4vw,44px);padding:12px 62px 12px 14px;
+  -moz-appearance:textfield;appearance:textfield;
+}
+.calc-input input::-webkit-outer-spin-button,.calc-input input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.calc-input input:focus{outline:2px solid var(--gold);outline-offset:-2px;border-color:var(--gold)}
+.calc-unit{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.18em;color:rgba(244,243,239,.5);pointer-events:none}
+.calc-slider{margin-bottom:20px}
+.calc-slider .row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
+.calc-slider .val{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;font-size:22px;color:var(--gold-hot)}
+.calc-slider input[type=range]{
+  width:100%;-webkit-appearance:none;appearance:none;background:transparent;height:26px;cursor:pointer;
+}
+.calc-slider input[type=range]::-webkit-slider-runnable-track{height:2px;background:rgba(244,243,239,.25)}
+.calc-slider input[type=range]::-moz-range-track{height:2px;background:rgba(244,243,239,.25)}
+.calc-slider input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;
+  background:var(--gold);border:0;margin-top:-9px;box-shadow:0 0 0 4px rgba(232,163,61,.2);
+}
+.calc-slider input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--gold);border:0;box-shadow:0 0 0 4px rgba(232,163,61,.2)}
+.calc-slider input[type=range]:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+.calc-preset{display:flex;gap:8px;flex-wrap:wrap;margin-top:-8px;margin-bottom:20px}
+.calc-preset button{
+  background:none;border:1px solid rgba(244,243,239,.24);color:rgba(244,243,239,.7);cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;padding:7px 11px;transition:all .25s;
+}
+.calc-preset button:hover{border-color:var(--gold);color:var(--gold-hot)}
+
+/* --- results --- */
+.calc-out{display:flex;flex-direction:column;gap:clamp(12px,1.5vw,18px)}
+.calc-hero{border:1px solid rgba(232,163,61,.4);background:linear-gradient(160deg,rgba(232,163,61,.13),rgba(232,163,61,.02));padding:clamp(20px,2.6vw,34px)}
+.calc-hero .calc-lbl{color:var(--gold-hot)}
+.calc-big{
+  font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;line-height:.88;
+  font-size:clamp(56px,8.5vw,112px);color:#fff;letter-spacing:.005em;
+}
+.calc-big small{font-size:.42em;color:var(--gold-hot);margin-left:.12em;font-style:italic}
+.calc-sub{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,243,239,.62);margin-top:12px}
+.calc-pair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,1.5vw,18px)}
+.calc-card{border:1px solid rgba(244,243,239,.16);background:rgba(244,243,239,.03);padding:clamp(16px,2vw,24px)}
+.calc-num{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;font-size:clamp(30px,4vw,50px);line-height:1;color:#fff}
+.calc-num small{font-size:.4em;color:var(--gold-hot);margin-left:.1em}
+
+/* before / after bar */
+.calc-bars{border:1px solid rgba(244,243,239,.16);background:rgba(244,243,239,.03);padding:clamp(16px,2vw,24px)}
+.bar-row{margin-top:12px}
+.bar-row:first-of-type{margin-top:14px}
+.bar-head{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,243,239,.62);margin-bottom:6px}
+.bar-track{height:12px;background:rgba(244,243,239,.09);position:relative;overflow:hidden}
+.bar-fill{position:absolute;left:0;top:0;bottom:0;transition:width .7s var(--ease-out)}
+.bar-fill.base{background:rgba(244,243,239,.32)}
+.bar-fill.treated{background:linear-gradient(90deg,var(--gold),var(--gold-hot))}
+.calc-note{font-size:12px;color:rgba(244,243,239,.5);line-height:1.65;margin-top:4px}
+.calc-note b{color:rgba(244,243,239,.78);font-weight:600}
+.calc-cta{margin-top:6px}
+
+@media (max-width:900px){
+  .calc-grid{grid-template-columns:1fr;gap:20px}
+  .calc-big{font-size:clamp(52px,15vw,84px)}
+  .calc-pair{grid-template-columns:1fr 1fr;gap:10px}
+  .calc-num{font-size:clamp(26px,7.5vw,38px)}
+  .calc-input input[type=number]{font-size:clamp(28px,8vw,38px)}
+  #calc .calc-cta .btn-gold{display:block;text-align:center}
+}
+@media (max-width:380px){ .calc-pair{grid-template-columns:1fr} }
+
+/* how-it-works CTA row */
+.how-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:clamp(30px,4vw,52px)}
+.btn-ink{
+  display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-style:italic;
+  text-transform:uppercase;letter-spacing:.1em;font-size:19px;padding:16px 34px;
+  border:1px solid var(--ink);color:var(--ink);transition:background .3s,color .3s;
+}
+.btn-ink:hover{background:var(--ink);color:#fff}
+@media (max-width:560px){ .how-cta .btn-gold,.how-cta .btn-ink{flex:1 1 100%;text-align:center} }
+
 /* ============ RADIO CHATTER (UHF CH 40 cards over the film) ============ */
 .radio{
   position:absolute;right:clamp(20px,4vw,56px);bottom:14vh;z-index:6;
@@ -838,14 +934,96 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
       <div class="steps-wrap">
         <div class="spine"></div>
         <div class="steps-c">
-          <div class="step-c"><p>Submit your enquiry to admin@fuel2go.com.au or through the <a href="#cta">contact form</a>.</p><div class="num"><span>01</span></div></div>
+          <div class="step-c"><p>Send us your enquiry with your fleet volume and what you need on site.</p><div class="num"><span>01</span></div></div>
           <div class="step-c"><p>A team member will be in touch to discuss your requirements.</p><div class="num"><span>02</span></div></div>
           <div class="step-c"><p>We set up your account and complete the onboarding process.</p><div class="num"><span>03</span></div></div>
           <div class="step-c"><p>Tanks can be delivered on site within 14 days of account approval.</p><div class="num"><span>04</span></div></div>
         </div>
       </div>
+      <div class="how-cta">
+        <a class="btn-gold" href="#" data-drawer>Send an enquiry</a>
+        <a class="btn-ink" href="#apply">Open an account</a>
+      </div>
     </div>
   </section>
+
+  <!-- ================== SAVINGS CALCULATOR ================== -->
+  <section class="section" id="calc">
+    <div class="wrap-c">
+      <div class="kick-c">Run the numbers</div>
+      <h2 class="display">What treated diesel<br>gives you back.</h2>
+      <p class="lede">Enter what your fleet burns. We work out the litres you stop buying, the money you keep, and the carbon you never emit.</p>
+
+      <div class="calc-grid">
+        <!-- controls -->
+        <div class="calc-panel">
+          <div class="calc-seg" role="group" aria-label="Period">
+            <button type="button" id="segMonth" class="on" aria-pressed="true">Per month</button>
+            <button type="button" id="segYear" aria-pressed="false">Per year</button>
+          </div>
+
+          <label class="calc-lbl" for="calcLitres">Diesel used <span id="periodLbl">per month</span></label>
+          <div class="calc-input">
+            <input type="number" id="calcLitres" value="20000" min="0" step="100" inputmode="numeric" aria-describedby="periodLbl">
+            <span class="calc-unit">LITRES</span>
+          </div>
+          <div class="calc-preset" id="calcPresets"></div>
+
+          <div class="calc-slider">
+            <div class="row"><span class="calc-lbl" style="margin:0" id="priceLbl">Diesel price</span><span class="val" id="priceVal">$2.20</span></div>
+            <input type="range" id="calcPrice" min="1.40" max="3.20" step="0.01" value="2.20" aria-labelledby="priceLbl">
+          </div>
+
+          <div class="calc-slider" style="margin-bottom:6px">
+            <div class="row"><span class="calc-lbl" style="margin:0" id="gainLbl">Fuel economy gain</span><span class="val" id="gainVal">7%</span></div>
+            <input type="range" id="calcGain" min="5" max="10" step="0.5" value="7" aria-labelledby="gainLbl">
+          </div>
+          <p class="calc-note">Fyrex CI is rated at a <b>5&ndash;10%</b> fuel economy improvement. 7% is the mid-case used in our worked example.</p>
+        </div>
+
+        <!-- results -->
+        <div class="calc-out">
+          <div class="calc-hero">
+            <span class="calc-lbl">Money saved <span class="perLbl">per month</span></span>
+            <div class="calc-big"><small>$</small><span id="outMoney">924</span></div>
+            <div class="calc-sub" id="outMoneyYear">$11,094 per year</div>
+          </div>
+
+          <div class="calc-pair">
+            <div class="calc-card">
+              <span class="calc-lbl">Diesel not burned</span>
+              <div class="calc-num"><span id="outLitres">420</span><small>L</small></div>
+              <div class="calc-sub" id="outLitresYear">5,032 L per year</div>
+            </div>
+            <div class="calc-card">
+              <span class="calc-lbl">CO<sub>2</sub>-e avoided</span>
+              <div class="calc-num"><span id="outCo2">1.1</span><small>t</small></div>
+              <div class="calc-sub" id="outCo2Year">13.7 t per year</div>
+            </div>
+          </div>
+
+          <div class="calc-bars">
+            <span class="calc-lbl">Litres burned <span class="perLbl">per month</span></span>
+            <div class="bar-row">
+              <div class="bar-head"><span>Untreated</span><span id="barBaseVal">20,000 L</span></div>
+              <div class="bar-track"><div class="bar-fill base" id="barBase" style="width:100%"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-head"><span>Treated with Fuel2Go</span><span id="barTreatVal">18,692 L</span></div>
+              <div class="bar-track"><div class="bar-fill treated" id="barTreat" style="width:93.5%"></div></div>
+            </div>
+          </div>
+
+          <p class="calc-note">
+            Break-even: the additive pays for itself at anything under <b id="outBreakeven">$0.065</b> per litre treated.
+            Based on <b>2.72 kg CO<sub>2</sub>-e per litre</b> of diesel. An estimate from the figures you entered, not a quote.
+          </p>
+          <div class="calc-cta"><a class="btn-gold" href="#" data-drawer>Get this costed for your fleet</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ================ end SAVINGS CALCULATOR ================ -->
 
   <!-- ================== DOOR PLATE (CH 40) ================== -->
   <section class="section" id="door">
@@ -912,7 +1090,7 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
         <div class="cta-row"><span class="k">Coverage</span><span class="v">Australia + NZ</span></div>
         <div class="cta-row"><span class="k">Tanks on site</span><span class="v gold">14 days</span></div>
         <div class="cta-row"><span class="k">Diesel</span><span class="v">Additive-treated</span></div>
-        <a class="btn-gold" href="mailto:admin@fuel2go.com.au">Email the team</a>
+        <a class="btn-gold" href="#" data-drawer>Email the team</a>
       </div>
     </div>
     <div class="marq" aria-hidden="true"><div class="track"><span>More kilometres per tank <em>&nbsp;·&nbsp;</em> Cleaner burn <em>&nbsp;·&nbsp;</em> Additive in every litre <em>&nbsp;·&nbsp;</em> Australia + New Zealand <em>&nbsp;·&nbsp;</em> </span><span>More kilometres per tank <em>&nbsp;·&nbsp;</em> Cleaner burn <em>&nbsp;·&nbsp;</em> Additive in every litre <em>&nbsp;·&nbsp;</em> Australia + New Zealand <em>&nbsp;·&nbsp;</em> </span></div></div>
@@ -1295,6 +1473,121 @@ document.querySelectorAll('.section').forEach(function(s){ io.observe(s); });
   if (v && window.matchMedia('(prefers-reduced-motion: reduce)').matches){
     v.removeAttribute('autoplay'); v.pause();
   }
+})();
+
+/* ---------- savings calculator ----------
+   Method, from the client's worked example:
+     new economy   = base * (1 + gain)
+     litres needed = litres / (1 + gain)
+     litres saved  = litres - litres/(1 + gain)
+     money saved   = litres saved * price
+     CO2 avoided   = litres saved * 2.72 kg  (AU diesel direct combustion)
+   ------------------------------------------------------------------ */
+(function(){
+  var elL = document.getElementById('calcLitres');
+  if (!elL) return;
+  var elPrice = document.getElementById('calcPrice'),
+      elGain  = document.getElementById('calcGain'),
+      segM    = document.getElementById('segMonth'),
+      segY    = document.getElementById('segYear'),
+      CO2_PER_L = 2.72;
+  var yearly = false;
+
+  var PRESETS = { month: [5000, 10000, 20000, 50000], year: [60000, 120000, 250000, 600000] };
+
+  function fmt(n, dp){
+    return n.toLocaleString('en-AU', { minimumFractionDigits: dp || 0, maximumFractionDigits: dp || 0 });
+  }
+  function setText(id, v){ var e = document.getElementById(id); if (e) e.textContent = v; }
+
+  /* animate a number toward its target so changes feel alive */
+  var anims = {};
+  function roll(id, to, dp, prefix){
+    var el = document.getElementById(id); if (!el) return;
+    var from = anims[id] === undefined ? to : anims[id];
+    var t0 = null, DUR = 420;
+    function step(t){
+      if (!t0) t0 = t;
+      var p = Math.min(1, (t - t0) / DUR), e = 1 - Math.pow(1 - p, 3);
+      var v = from + (to - from) * e;
+      el.textContent = (prefix || '') + fmt(v, dp);
+      if (p < 1) requestAnimationFrame(step); else anims[id] = to;
+    }
+    anims[id] = to;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){ el.textContent = (prefix||'') + fmt(to, dp); return; }
+    requestAnimationFrame(step);
+  }
+
+  function presets(){
+    var wrap = document.getElementById('calcPresets'); if (!wrap) return;
+    wrap.innerHTML = '';
+    PRESETS[yearly ? 'year' : 'month'].forEach(function(v){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = fmt(v) + ' L';
+      b.addEventListener('click', function(){ elL.value = v; calc(); });
+      wrap.appendChild(b);
+    });
+  }
+
+  function calc(){
+    var litres = Math.max(0, parseFloat(elL.value) || 0);
+    var price  = parseFloat(elPrice.value);
+    var gain   = parseFloat(elGain.value) / 100;
+
+    var treated     = litres / (1 + gain);
+    var litresSaved = litres - treated;
+    var money       = litresSaved * price;
+    var co2t        = litresSaved * CO2_PER_L / 1000;
+
+    var toYear = yearly ? 1 : 12;
+    var perYearLitres = litresSaved * toYear;
+    var perYearMoney  = money * toYear;
+    var perYearCo2    = co2t * toYear;
+
+    document.getElementById('priceVal').textContent = '$' + price.toFixed(2);
+    document.getElementById('gainVal').textContent  = (gain * 100).toFixed(gain * 100 % 1 ? 1 : 0) + '%';
+
+    roll('outMoney', money, 0);
+    roll('outLitres', litresSaved, 0);
+    roll('outCo2', co2t, co2t < 100 ? 1 : 0);
+
+    var per = yearly ? 'year' : 'month';
+    setText('outMoneyYear',  yearly ? '$' + fmt(money) + ' per year'   : '$' + fmt(perYearMoney) + ' per year');
+    setText('outLitresYear', yearly ? fmt(litresSaved) + ' L per year' : fmt(perYearLitres) + ' L per year');
+    setText('outCo2Year',    (yearly ? co2t : perYearCo2).toFixed(1) + ' t per year');
+
+    setText('barBaseVal',  fmt(litres) + ' L');
+    setText('barTreatVal', fmt(treated) + ' L');
+    var pct = litres > 0 ? (treated / litres) * 100 : 100;
+    document.getElementById('barTreat').style.width = pct.toFixed(2) + '%';
+
+    /* break-even: what the additive may cost per treated litre and still pay */
+    var be = litres > 0 ? money / litres : 0;
+    setText('outBreakeven', '$' + be.toFixed(3));
+
+    Array.prototype.forEach.call(document.querySelectorAll('.perLbl'), function(e){ e.textContent = 'per ' + per; });
+    var pl = document.getElementById('periodLbl'); if (pl) pl.textContent = 'per ' + per;
+  }
+
+  function setPeriod(toYear){
+    if (yearly === toYear) return;
+    var cur = parseFloat(elL.value) || 0;
+    /* carry the number across sensibly instead of resetting it */
+    elL.value = Math.round(toYear ? cur * 12 : cur / 12);
+    yearly = toYear;
+    segM.classList.toggle('on', !toYear); segM.setAttribute('aria-pressed', String(!toYear));
+    segY.classList.toggle('on', toYear);  segY.setAttribute('aria-pressed', String(toYear));
+    presets(); calc();
+  }
+
+  segM.addEventListener('click', function(){ setPeriod(false); });
+  segY.addEventListener('click', function(){ setPeriod(true); });
+  ['input','change'].forEach(function(ev){
+    elL.addEventListener(ev, calc); elPrice.addEventListener(ev, calc); elGain.addEventListener(ev, calc);
+  });
+
+  presets(); calc();
 })();
 
 /* ---------- enquiry drawer ---------- */
