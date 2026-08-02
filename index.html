@@ -329,7 +329,7 @@ header.on-light .head-phone{text-shadow:none}
 .stack-cat{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-hot)}
 .stack-name{
   font-family:'Barlow Condensed',sans-serif;font-weight:700;font-style:italic;
-  text-transform:uppercase;font-size:clamp(24px,2.4vw,38px);line-height:1;color:#fff;
+  text-transform:uppercase;font-size:clamp(24px,2.4vw,38px);line-height:1;letter-spacing:.01em;color:#fff;
 }
 .stack-btn{
   font-family:'Barlow Condensed',sans-serif;font-weight:700;font-style:italic;
@@ -368,40 +368,40 @@ header.on-light .head-phone{text-shadow:none}
 /* ===================== end CASE STACK ====================== */
 
 /* ============ SAVINGS CALCULATOR ============ */
-#calc{background:var(--ivory);color:var(--ink);padding:clamp(64px,9vh,120px) clamp(20px,6vw,90px)}
-#calc .display{font-size:clamp(38px,5vw,80px);color:var(--ink)}
-#calc .kick-c{color:#9a7420}
-#calc .lede{color:#3d4258;max-width:520px;margin-top:14px;font-size:clamp(14.5px,1.15vw,17px)}
+#calc{background:var(--ink);color:var(--ivory);padding:clamp(64px,9vh,120px) clamp(20px,6vw,90px)}
+#calc .display{font-size:clamp(38px,5vw,80px);color:#fff}
+#calc .kick-c{color:var(--gold-hot)}
+#calc .lede{color:rgba(244,243,239,.72);max-width:520px;margin-top:14px;font-size:clamp(14.5px,1.15vw,17px)}
 .calc-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(22px,3.4vw,56px);margin-top:clamp(30px,4vw,54px);align-items:start}
 
 /* --- controls --- */
-.calc-panel{background:#fff;border:1px solid rgba(3,13,48,.14);box-shadow:0 10px 30px rgba(3,13,48,.06);padding:clamp(18px,2.2vw,30px)}
-.calc-seg{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid rgba(3,13,48,.22);margin-bottom:22px}
+.calc-panel{background:rgba(244,243,239,.04);border:1px solid rgba(244,243,239,.14);padding:clamp(18px,2.2vw,30px)}
+.calc-seg{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid rgba(244,243,239,.3);margin-bottom:22px}
 .calc-seg button{
   background:none;border:0;cursor:pointer;padding:13px 8px;
   font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
-  color:#6f7590;transition:background .3s,color .3s;
+  color:rgba(244,243,239,.6);transition:background .3s,color .3s;
 }
 .calc-seg button.on{background:var(--gold);color:var(--ink);font-weight:500}
-.calc-lbl{display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#6f7590;margin-bottom:8px}
+.calc-lbl{display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:rgba(244,243,239,.55);margin-bottom:8px}
 .calc-input{position:relative;margin-bottom:22px}
 .calc-input input[type=number]{
-  width:100%;background:var(--ivory);border:1px solid rgba(3,13,48,.2);
-  color:var(--ink);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;
+  width:100%;background:rgba(3,13,48,.6);border:1px solid rgba(244,243,239,.22);
+  color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;
   font-size:clamp(30px,3.4vw,44px);padding:12px 62px 12px 14px;
   -moz-appearance:textfield;appearance:textfield;
 }
 .calc-input input::-webkit-outer-spin-button,.calc-input input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .calc-input input:focus{outline:2px solid var(--gold);outline-offset:-2px;border-color:var(--gold)}
-.calc-unit{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.18em;color:#8a8f9f;pointer-events:none}
+.calc-unit{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.18em;color:rgba(244,243,239,.5);pointer-events:none}
 .calc-slider{margin-bottom:20px}
 .calc-slider .row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
-.calc-slider .val{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;font-size:22px;color:#9a7420}
+.calc-slider .val{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;font-size:22px;color:var(--gold-hot)}
 .calc-slider input[type=range]{
   width:100%;-webkit-appearance:none;appearance:none;background:transparent;height:26px;cursor:pointer;
 }
-.calc-slider input[type=range]::-webkit-slider-runnable-track{height:2px;background:rgba(3,13,48,.18)}
-.calc-slider input[type=range]::-moz-range-track{height:2px;background:rgba(3,13,48,.18)}
+.calc-slider input[type=range]::-webkit-slider-runnable-track{height:2px;background:rgba(244,243,239,.25)}
+.calc-slider input[type=range]::-moz-range-track{height:2px;background:rgba(244,243,239,.25)}
 .calc-slider input[type=range]::-webkit-slider-thumb{
   -webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;
   background:var(--gold);border:0;margin-top:-9px;box-shadow:0 0 0 4px rgba(232,163,61,.2);
@@ -410,37 +410,37 @@ header.on-light .head-phone{text-shadow:none}
 .calc-slider input[type=range]:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
 .calc-preset{display:flex;gap:8px;flex-wrap:wrap;margin-top:-8px;margin-bottom:20px}
 .calc-preset button{
-  background:none;border:1px solid rgba(3,13,48,.2);color:#5a6076;cursor:pointer;
+  background:none;border:1px solid rgba(244,243,239,.24);color:rgba(244,243,239,.7);cursor:pointer;
   font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;padding:7px 11px;transition:all .25s;
 }
-.calc-preset button:hover{border-color:var(--gold);color:#9a7420}
+.calc-preset button:hover{border-color:var(--gold);color:var(--gold-hot)}
 
 /* --- results --- */
 .calc-out{display:flex;flex-direction:column;gap:clamp(12px,1.5vw,18px)}
-.calc-hero{border:1px solid rgba(232,163,61,.55);background:linear-gradient(160deg,rgba(232,163,61,.16),rgba(232,163,61,.04));padding:clamp(20px,2.6vw,34px)}
-.calc-hero .calc-lbl{color:#8a6a1e}
+.calc-hero{border:1px solid rgba(232,163,61,.4);background:linear-gradient(160deg,rgba(232,163,61,.13),rgba(232,163,61,.02));padding:clamp(20px,2.6vw,34px)}
+.calc-hero .calc-lbl{color:var(--gold-hot)}
 .calc-big{
   font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;line-height:.88;
-  font-size:clamp(56px,8.5vw,112px);color:var(--ink);letter-spacing:.005em;
+  font-size:clamp(56px,8.5vw,112px);color:#fff;letter-spacing:.01em;
 }
-.calc-big small{font-size:.42em;color:#9a7420;margin-left:.12em;font-style:italic}
-.calc-sub{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:#6f7590;margin-top:12px}
+.calc-big small{font-size:.42em;color:var(--gold-hot);margin-left:.12em;font-style:italic}
+.calc-sub{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,243,239,.62);margin-top:12px}
 .calc-pair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,1.5vw,18px)}
-.calc-card{border:1px solid rgba(3,13,48,.14);background:#fff;padding:clamp(16px,2vw,24px)}
-.calc-num{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;font-size:clamp(30px,4vw,50px);line-height:1;color:var(--ink)}
-.calc-num small{font-size:.4em;color:#9a7420;margin-left:.1em}
+.calc-card{border:1px solid rgba(244,243,239,.16);background:rgba(244,243,239,.03);padding:clamp(16px,2vw,24px)}
+.calc-num{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;font-size:clamp(30px,4vw,50px);line-height:1;letter-spacing:.01em;color:#fff}
+.calc-num small{font-size:.4em;color:var(--gold-hot);margin-left:.1em}
 
 /* before / after bar */
-.calc-bars{border:1px solid rgba(3,13,48,.14);background:#fff;padding:clamp(16px,2vw,24px)}
+.calc-bars{border:1px solid rgba(244,243,239,.16);background:rgba(244,243,239,.03);padding:clamp(16px,2vw,24px)}
 .bar-row{margin-top:12px}
 .bar-row:first-of-type{margin-top:14px}
-.bar-head{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#6f7590;margin-bottom:6px}
-.bar-track{height:12px;background:rgba(3,13,48,.09);position:relative;overflow:hidden}
+.bar-head{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,243,239,.62);margin-bottom:6px}
+.bar-track{height:12px;background:rgba(244,243,239,.09);position:relative;overflow:hidden}
 .bar-fill{position:absolute;left:0;top:0;bottom:0;transition:width .7s var(--ease-out)}
-.bar-fill.base{background:rgba(3,13,48,.3)}
+.bar-fill.base{background:rgba(244,243,239,.32)}
 .bar-fill.treated{background:linear-gradient(90deg,var(--gold),var(--gold-hot))}
-.calc-note{font-size:12px;color:#5a6076;line-height:1.65;margin-top:4px}
-.calc-note b{color:var(--ink);font-weight:600}
+.calc-note{font-size:12px;color:rgba(244,243,239,.5);line-height:1.65;margin-top:4px}
+.calc-note b{color:rgba(244,243,239,.78);font-weight:600}
 .calc-cta{margin-top:6px}
 
 @media (max-width:900px){
@@ -462,56 +462,6 @@ header.on-light .head-phone{text-shadow:none}
 }
 .btn-ink:hover{background:var(--ink);color:#fff}
 @media (max-width:560px){ .how-cta .btn-gold,.how-cta .btn-ink{flex:1 1 100%;text-align:center} }
-
-/* ============ RADIO CHATTER (UHF CH 40 cards over the film) ============ */
-.radio{
-  position:absolute;right:clamp(20px,4vw,56px);bottom:14vh;z-index:6;
-  max-width:min(360px,74vw);opacity:0;pointer-events:none;
-  border:1px solid rgba(232,163,61,.5);background:rgba(5,8,24,.72);
-  backdrop-filter:blur(6px);padding:12px 16px;
-  transform:translateY(10px);
-}
-.radio .ch{
-  font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.28em;
-  text-transform:uppercase;color:var(--gold-hot);display:flex;align-items:center;gap:7px;
-}
-.radio .ch::before{
-  content:"";width:6px;height:6px;border-radius:50%;background:var(--gold-hot);
-  box-shadow:0 0 8px var(--gold-hot);animation:squelch 1.4s ease-in-out infinite;
-}
-.radio p{
-  margin-top:7px;font-size:14px;line-height:1.45;color:rgba(244,243,239,.94);
-  text-shadow:0 1px 10px rgba(0,0,0,.6);
-}
-@keyframes squelch{0%,100%{opacity:.35}50%{opacity:1}}
-@media (max-width:900px){
-  .radio{right:auto;left:clamp(18px,5vw,40px);bottom:22vh;max-width:78vw;padding:10px 13px}
-  .radio p{font-size:13px}
-}
-@media (prefers-reduced-motion:reduce){ .radio .ch::before{animation:none} }
-
-/* ============ DOOR PLATE (the CH 40 moment) ============ */
-#door{background:var(--ink);padding:clamp(70px,9vh,120px) clamp(22px,6vw,90px)}
-#door .display{font-size:clamp(40px,5vw,80px);color:#fff}
-.door-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,4vw,64px);align-items:center;margin-top:clamp(28px,4vw,52px)}
-.door-shot{position:relative;overflow:hidden;border:1px solid rgba(244,243,239,.16)}
-.door-shot img{width:100%;display:block;transition:transform 1.4s var(--ease-out)}
-.door-shot:hover img{transform:scale(1.03)}
-.door-shot .glint{
-  position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.16) 50%,transparent 62%);
-  transform:translateX(-120%);
-}
-.section.in .door-shot .glint{animation:glint 2.4s var(--ease-out) .5s 1 forwards}
-@keyframes glint{to{transform:translateX(120%)}}
-.door-copy p{color:rgba(244,243,239,.8);font-size:clamp(15px,1.2vw,17.5px);max-width:440px;margin-top:16px}
-.door-note{
-  margin-top:26px;border-left:2px solid var(--gold);padding:12px 0 12px 16px;
-  font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--gold-hot);line-height:1.9;
-}
-.door-note span{display:block;color:rgba(244,243,239,.55)}
-@media (max-width:900px){ .door-grid{grid-template-columns:1fr;gap:26px} }
 
 /* ============ ENQUIRY DRAWER ============ */
 #drawerScrim{position:fixed;inset:0;z-index:190;background:rgba(3,5,16,.72);backdrop-filter:blur(3px);opacity:0;visibility:hidden;transition:opacity .4s ease,visibility .4s}
@@ -712,28 +662,6 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
       <div class="kick">The result</div>
       <h2>More kilometres<br>per tank.</h2>
       <p>Fleets running treated diesel go further between fills. That is the whole point.</p>
-    </div>
-
-    <!-- ============ RADIO CHATTER (CH 40) ============ -->
-    <div class="radio" data-in="0.05" data-peak="0.10" data-out="0.16">
-      <div class="ch">CH 40 — Highway</div>
-      <p>&ldquo;Loaded and treated, driver. Rolling.&rdquo;</p>
-    </div>
-    <div class="radio" data-in="0.23" data-peak="0.28" data-out="0.34">
-      <div class="ch">CH 40 — Highway</div>
-      <p>&ldquo;Clean tank. No water, no wax.&rdquo;</p>
-    </div>
-    <div class="radio" data-in="0.41" data-peak="0.46" data-out="0.52">
-      <div class="ch">CH 40 — Highway</div>
-      <p>&ldquo;Filters are staying clean this run.&rdquo;</p>
-    </div>
-    <div class="radio" data-in="0.59" data-peak="0.64" data-out="0.70">
-      <div class="ch">CH 40 — Highway</div>
-      <p>&ldquo;She&rsquo;s pulling nice up the range.&rdquo;</p>
-    </div>
-    <div class="radio" data-in="0.77" data-peak="0.82" data-out="0.87">
-      <div class="ch">CH 40 — Highway</div>
-      <p>&ldquo;Still on the same tank. Catch you on the other side.&rdquo;</p>
     </div>
 
     <div class="beat beat--finale" data-in="0.87" data-peak="0.95" data-out="2">
@@ -1024,30 +952,6 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
     </div>
   </section>
   <!-- ================ end SAVINGS CALCULATOR ================ -->
-
-  <!-- ================== DOOR PLATE (CH 40) ================== -->
-  <section class="section" id="door">
-    <div class="wrap-c">
-      <div class="kick-c" style="color:var(--gold-hot)">On the door</div>
-      <h2 class="display">If you know,<br>you know.</h2>
-      <div class="door-grid">
-        <div class="door-shot">
-          <img src="assets/door-plate.jpg" alt="Fuel 2 Go truck door signwriting: Brisbane QLD, ACN 683 689 787, Monitoring CH 40" loading="lazy">
-          <div class="glint"></div>
-        </div>
-        <div class="door-copy">
-          <p>You would not leave your truck sitting out with the tank filthy. You would not run a door that dirty either.</p>
-          <p>So why put dirty fuel through it? Every Fuel2Go truck carries the same four lines. Three of them are paperwork. The fourth is for the drivers.</p>
-          <p>Channel 40 is the highway channel. It is where the road actually talks to itself, and it is on our doors because we are on it too.</p>
-          <div class="door-note">
-            Monitoring CH 40
-            <span>Brisbane QLD &middot; ACN 683 689 787</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- ================ end DOOR PLATE ================ -->
 
   <!-- ================== ACCOUNT APPLICATION ================== -->
   <section class="section" id="apply">
@@ -1350,8 +1254,7 @@ function computeProgress(){
 }
 
 /* ---------- beats ---------- */
-/* .radio cards ride the same driver as .beat */
-var beats = Array.prototype.map.call(document.querySelectorAll('.beat, .radio'), function(el){
+var beats = Array.prototype.map.call(document.querySelectorAll('.beat'), function(el){
   return { el: el, i: +el.dataset.in, pk: +el.dataset.peak, o: +el.dataset.out };
 });
 function beatAlpha(b, p){
@@ -1400,8 +1303,7 @@ function tick(now){
     var el = beats[i].el;
     el.style.opacity = a.toFixed(3);
     var dir = progress < beats[i].pk ? 1 : -1;
-    /* radio cards and the finale are bottom-anchored, not vertically centred */
-    var base = (el.classList.contains('beat--finale') || el.classList.contains('radio')) ? '' : 'translateY(-50%) ';
+    var base = el.classList.contains('beat--finale') ? '' : 'translateY(-50%) ';
     el.style.transform = base + 'translateY(' + ((1 - a) * 14 * dir) + 'px)';
   }
 
