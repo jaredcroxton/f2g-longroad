@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fuel2Go — Diesel That Goes Further | Fuel and Additive Delivery Across Australia and NZ</title>
+<meta name="description" content="Fuel2Go delivers additive-treated diesel to transport, construction and mining operations across Australia and New Zealand. Cleaner burn, more kilometres per tank.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* navy + grey ramp sampled directly from the official logo artwork */
+  --ink:#030D30;
+  --film-deep:#050818;
+  --silver:#A7A9AC;        /* logo keyline */
+  --steel:#6D6E71;         /* logo chevron, darkest grey */
+  --steel-mid:#8A8C90;     /* mid step of the chevron ramp */
+  --gold:#E8A33D;
+  --gold-hot:#F5C15E;
+  --ivory:#F4F3EF;
+  --white:#FFFFFF;
+  --ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:auto}
+body{background:var(--film-deep);color:var(--ivory);font-family:'Archivo',sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.mono{font-family:'IBM Plex Mono',monospace}
+
+/* ============ LOADER (non-blocking chip — the poster shows behind it) ============ */
+#loader{position:fixed;inset:0;background:var(--film-deep);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;transition:opacity .8s ease, visibility .8s}
+#loader.done{opacity:0;visibility:hidden}
+#loader img{width:180px;filter:drop-shadow(0 0 24px rgba(232,163,61,.25))}
+#loadbar{width:min(320px,70vw);height:2px;background:rgba(244,243,239,.12);overflow:hidden}
+#loadbar i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold-hot));transition:width .25s ease}
+#loadpct{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.28em;color:var(--silver)}
+
+/* ============ HEADER ============ */
+header{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px clamp(20px,4vw,44px);display:flex;align-items:center;justify-content:space-between;color:#fff;transition:color .4s ease}
+header::before{content:"";position:absolute;inset:0 0 auto 0;height:190%;z-index:-1;background:linear-gradient(to bottom,rgba(5,8,24,.66),rgba(5,8,24,0));pointer-events:none;transition:opacity .4s ease}
+header.on-light{color:var(--ink)}
+header.on-light::before{opacity:0}
+.brand img{width:128px;filter:drop-shadow(0 1px 12px rgba(0,0,0,.5)) brightness(0) invert(1);transition:filter .4s ease}
+header.on-light .brand img{filter:none}
+.head-right{display:flex;align-items:center;gap:26px}
+.head-phone{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;text-shadow:0 1px 16px rgba(0,0,0,.45)}
+header.on-light .head-phone{text-shadow:none}
+.head-cta{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-style:italic;text-transform:uppercase;letter-spacing:.1em;font-size:15px;padding:10px 22px;border:1px solid currentColor;transition:background .3s,color .3s}
+.head-cta:hover{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+
+/* chapter readout */
+#readout{position:fixed;left:clamp(20px,4vw,44px);bottom:26px;z-index:90;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#fff;opacity:0;transition:opacity .6s ease;text-shadow:0 1px 12px rgba(0,0,0,.6)}
+#readout.show{opacity:.92}
+#readout .ch{color:var(--gold-hot)}
+#readout .bar{display:block;width:120px;height:1px;background:rgba(255,255,255,.22);margin-top:8px;position:relative}
+#readout .bar i{position:absolute;left:0;top:0;bottom:0;width:0%;background:var(--gold)}
+#scrollcue{position:fixed;left:50%;transform:translateX(-50%);bottom:24px;z-index:90;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#fff;opacity:0;transition:opacity .6s ease;text-shadow:0 1px 10px rgba(0,0,0,.75)}
+#scrollcue.show{opacity:1}
+#scrollcue::after{content:"";display:block;width:12px;height:12px;border-right:2.5px solid #fff;border-bottom:2.5px solid #fff;transform:rotate(45deg);margin:8px auto 0;filter:drop-shadow(0 1px 6px rgba(0,0,0,.8));animation:cue 1.6s ease-in-out infinite}
+@keyframes cue{0%,100%{transform:rotate(45deg) translate(0,0);opacity:.55}50%{transform:rotate(45deg) translate(4px,4px);opacity:1}}
+
+/* ============ FILM ============ */
+#film-scroll{position:relative;height:880vh}
+#stage{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--film-deep) url('assets/frames/f_0001.jpg?v=6') center/cover no-repeat}
+#film{position:absolute;inset:0;width:100%;height:100%}
+#grain{position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:overlay}
+#vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 90% at 50% 45%,transparent 55%,rgba(3,5,16,.52) 100%)}
+#handoff{position:absolute;inset:0;pointer-events:none;opacity:0;background:linear-gradient(to bottom,transparent 30%,var(--ivory) 96%)}
+
+/* beats */
+.beat{position:absolute;z-index:5;opacity:0;pointer-events:none;max-width:min(560px,86vw)}
+.beat::before{content:"";position:absolute;z-index:-1;inset:-60% -30% -60% -20%;background:radial-gradient(62% 60% at 30% 50%,rgba(4,6,18,.66),rgba(4,6,18,.34) 48%,transparent 76%)}
+.beat .kick{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-hot);margin-bottom:14px}
+.beat h2{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;text-transform:uppercase;font-size:clamp(44px,6.2vw,86px);line-height:.94;color:#fff;letter-spacing:.01em}
+.beat p{margin-top:16px;font-size:clamp(14px,1.15vw,17px);color:rgba(244,243,239,.88);max-width:420px}
+.beat--left{left:clamp(22px,6vw,90px);top:50%;transform:translateY(-50%)}
+.beat--hero{left:clamp(22px,6vw,90px);top:50%;transform:translateY(-50%)}
+.beat--hero .wordmark{width:min(300px,56vw);margin-bottom:26px;filter:brightness(0) invert(1) drop-shadow(0 2px 18px rgba(0,0,0,.45))}
+.beat--finale{left:clamp(22px,6vw,90px);top:auto;bottom:14vh;transform:none}
+.beat--finale .cta-row{display:flex;gap:16px;margin-top:26px;pointer-events:auto;flex-wrap:wrap}
+.btn-gold{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;text-transform:uppercase;letter-spacing:.1em;font-size:19px;padding:16px 38px;background:var(--gold);color:var(--ink);border:1px solid var(--gold);position:relative;overflow:hidden;transition:transform .25s var(--ease-out),box-shadow .25s;box-shadow:0 0 34px rgba(232,163,61,.35)}
+.btn-gold::after{content:"";position:absolute;top:0;bottom:0;left:-70%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-18deg);transition:left .55s ease}
+.btn-gold:hover::after{left:130%}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 44px rgba(232,163,61,.5)}
+.btn-gold:active{transform:translateY(0)}
+.btn-line{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-style:italic;text-transform:uppercase;letter-spacing:.1em;font-size:19px;padding:16px 34px;border:1px solid rgba(255,255,255,.55);color:#fff;transition:border-color .3s,background .3s}
+.btn-line:hover{border-color:var(--gold);background:rgba(232,163,61,.12)}
+
+/* ============ CONTENT ============ */
+#content{position:relative;background:var(--ivory);color:var(--ink)}
+#landing{height:9vh;background:linear-gradient(to bottom,var(--seam,#3a2c14) 0%,var(--ink) 100%)}
+.section{min-height:min(92vh,900px);display:flex;align-items:center;padding:72px clamp(22px,6vw,90px)}
+.wrap-c{max-width:1200px;margin:0 auto;width:100%}
+.kick-c{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#9a7420;margin-bottom:18px}
+.display{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;text-transform:uppercase;line-height:.92;letter-spacing:.01em}
+.section .wrap-c > *,.section .stag > *{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease-out),transform .9s var(--ease-out)}
+.section.in .wrap-c > *,.section.in .stag > *{opacity:1;transform:none}
+.section.in .wrap-c > *:nth-child(2){transition-delay:.09s}
+.section.in .wrap-c > *:nth-child(3){transition-delay:.18s}
+.section.in .wrap-c > *:nth-child(4){transition-delay:.27s}
+.section.in .stag > *:nth-child(2){transition-delay:.12s}
+.section.in .stag > *:nth-child(3){transition-delay:.24s}
+
+
+
+/* services */
+/* ============ SERVICE PILLARS (horizontal scroll) ============
+   Popberry-style pinned sideways scroller in f2g colours.
+   Section is N*100vh tall; the inner viewport is sticky and the
+   track slides left as you scroll through. Wavy seams between
+   panels. JS driver: "service pillars" block at the bottom.
+   ============================================================= */
+#services{position:relative;height:340vh;background:var(--ink)}
+.pillar-pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.pillar-track{display:flex;height:100%;width:300vw;will-change:transform}
+
+.pillar{
+  position:relative;width:100vw;height:100%;flex:none;
+  display:flex;align-items:center;
+  padding:clamp(80px,10vh,120px) clamp(22px,6vw,90px) clamp(60px,8vh,100px);
+}
+.pillar--ink{background:var(--ink);color:var(--ivory)}
+.pillar--gold{background:var(--gold);color:var(--ink)}
+.pillar--ivory{background:var(--ivory);color:var(--ink)}
+
+/* wavy vertical seam biting into the previous panel */
+.pillar::before{
+  content:"";position:absolute;left:-24px;top:0;bottom:0;width:26px;
+  background-repeat:repeat-y;background-size:26px 90px;pointer-events:none;
+}
+.pillar--gold::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='90' viewBox='0 0 26 90'%3E%3Cpath d='M26 0 L10 0 Q2 11.25 10 22.5 T10 45 T10 67.5 T10 90 L26 90 Z' fill='%23E8A33D'/%3E%3C/svg%3E")}
+.pillar--ivory::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='90' viewBox='0 0 26 90'%3E%3Cpath d='M26 0 L10 0 Q2 11.25 10 22.5 T10 45 T10 67.5 T10 90 L26 90 Z' fill='%23F4F3EF'/%3E%3C/svg%3E")}
+.pillar--ink::before{display:none}
+
+.pillar-grid{
+  display:grid;grid-template-columns:1.25fr .75fr;align-items:center;
+  gap:clamp(28px,4vw,70px);max-width:1280px;margin:0 auto;width:100%;
+}
+.pillar-chip{
+  display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;
+  letter-spacing:.26em;text-transform:uppercase;padding:8px 16px;
+  border:1.5px solid currentColor;margin-bottom:22px;
+}
+.pillar--ink .pillar-chip{color:var(--gold-hot)}
+.pillar-word{
+  font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;
+  text-transform:uppercase;font-size:clamp(68px,10vw,168px);line-height:.84;
+  letter-spacing:.01em;
+}
+.pillar-sub{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-style:italic;
+  text-transform:uppercase;font-size:clamp(20px,2vw,30px);line-height:1;
+  margin-top:14px;opacity:.85;
+}
+.pillar-quip{
+  margin-top:26px;max-width:440px;padding:18px 22px;
+  border:2px solid currentColor;font-size:clamp(14px,1.1vw,16.5px);line-height:1.55;
+}
+.pillar--ink .pillar-quip{border-color:rgba(244,243,239,.5)}
+.pillar-count{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.26em;
+  margin-top:24px;opacity:.6;
+}
+
+/* image card, popberry tilt in f2g clothes */
+.pillar-fig{position:relative;justify-self:end;transform:rotate(-3.5deg);width:min(30vw,360px)}
+.pillar--gold .pillar-fig,.pillar--ivory .pillar-fig{transform:rotate(3deg)}
+.pillar-fig img{
+  width:100%;aspect-ratio:3/4;object-fit:cover;display:block;
+  border:2.5px solid var(--ink);box-shadow:10px 10px 0 rgba(10,16,53,.28);
+}
+.pillar--ink .pillar-fig img{border-color:rgba(244,243,239,.85);box-shadow:10px 10px 0 rgba(232,163,61,.5)}
+.pillar-fig .fig-chip{
+  position:absolute;top:-14px;left:-18px;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;
+  text-transform:uppercase;padding:7px 13px;background:var(--gold);color:var(--ink);
+  border:2px solid var(--ink);transform:rotate(-2deg);
+}
+
+@media (max-width:900px){
+  .pillar{padding:64px 20px 42px}
+  .pillar-grid{grid-template-columns:1fr;gap:24px;align-content:center}
+  .pillar-word{font-size:clamp(50px,15vw,110px)}
+  .pillar-sub{font-size:clamp(17px,4.6vw,24px)}
+  .pillar-quip{font-size:14px;padding:14px 16px}
+  .pillar-count{margin-top:16px}
+  .pillar-fig{justify-self:start;width:min(38vw,200px);margin-left:6px}
+  .pillar-fig img{box-shadow:7px 7px 0 rgba(10,16,53,.28)}
+}
+@media (prefers-reduced-motion:reduce){
+  .pillar-fig{transform:none}
+}
+/* ================= end SERVICE PILLARS ===================== */
+
+/* industries */
+/* ============ X-RAY (generated film section) ============
+   Standalone looping veo3 film: x-ray tanker, gold fuel
+   circulating. Full-bleed video with an overlaid title block.
+   ========================================================= */
+#xray{position:relative;display:block;min-height:0;padding:0;background:var(--film-deep);overflow:hidden}
+#xray video{display:block;width:100%;height:min(96svh,860px);object-fit:cover}
+#xray .xray-scrim{position:absolute;inset:0;background:linear-gradient(120deg,rgba(5,8,24,.78) 0%,rgba(5,8,24,.28) 45%,transparent 70%);pointer-events:none}
+#xray .xray-copy{position:absolute;left:clamp(22px,6vw,90px);top:50%;transform:translateY(-50%);max-width:520px}
+#xray .kick-c{color:var(--gold-hot)}
+#xray .display{font-size:clamp(40px,5.4vw,84px);color:#fff}
+#xray .xray-sub{margin-top:16px;font-size:clamp(14px,1.15vw,17px);color:rgba(244,243,239,.85);max-width:400px}
+#xray .xray-tag{
+  position:absolute;right:clamp(20px,4vw,44px);bottom:20px;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.24em;
+  text-transform:uppercase;color:rgba(244,243,239,.75);
+  border:1px solid rgba(244,243,239,.3);padding:8px 14px;background:rgba(5,8,24,.45);
+}
+@media (max-width:900px){
+  /* show the film at its natural ratio so the diagram labels stay
+     legible and never crop; copy sits below instead of overlaying */
+  #xray{padding-bottom:40px}
+  #xray video{height:auto;aspect-ratio:16/9}
+  #xray .xray-scrim{display:none}
+  #xray .xray-copy{position:static;transform:none;max-width:none;padding:30px 20px 0}
+  #xray .xray-tag{display:none}
+}
+/* ================== end X-RAY section =================== */
+
+/* ============ INDUSTRIES (split accordion) ============
+   No pinning. Desktop: hover/click expands a panel, the others
+   compress and dim. Mobile: native scroll-snap swipe carousel.
+   ====================================================== */
+#industries{background:var(--ivory)}
+#industries .display{font-size:clamp(44px,5.4vw,88px);color:var(--ink);margin-bottom:clamp(24px,3.5vh,44px)}
+.ind-acc{display:flex;gap:clamp(10px,1.2vw,18px);height:min(62vh,600px)}
+.ind-panel{position:relative;flex:1;min-width:0;overflow:hidden;background:var(--ink);cursor:pointer;transition:flex .8s var(--ease-out)}
+.ind-panel.on{flex:2.6}
+.ind-panel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.35) brightness(.6);transform:scale(1.06);transition:filter .6s ease,transform 1.2s var(--ease-out)}
+.ind-panel.on img{filter:none;transform:scale(1)}
+.ind-panel::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 42%,rgba(5,8,24,.85) 100%)}
+.ind-copy2{position:absolute;left:22px;right:22px;bottom:18px;z-index:2}
+.ind-copy2 .tag{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;text-transform:uppercase;font-size:clamp(26px,2.4vw,40px);color:#fff;white-space:nowrap}
+.ind-copy2 .rule{width:0;height:2px;background:var(--gold);margin:8px 0 0;transition:width .7s var(--ease-out) .15s}
+.ind-panel.on .rule{width:56px}
+.ind-copy2 .sub{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-hot);opacity:0;transform:translateY(8px);transition:opacity .5s .2s,transform .5s .2s;margin-top:8px}
+.ind-copy2 .desc{font-size:13.5px;line-height:1.55;color:rgba(244,243,239,.85);max-height:0;opacity:0;overflow:hidden;transition:max-height .6s var(--ease-out) .15s,opacity .5s .2s,margin .4s}
+.ind-panel.on .sub{opacity:1;transform:none}
+.ind-panel.on .desc{max-height:90px;opacity:1;margin-top:8px}
+.ind-hint{display:none;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#8a8f9f;margin-top:14px}
+
+@media (max-width:900px){
+  .ind-acc{height:auto;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .ind-acc::-webkit-scrollbar{display:none}
+  .ind-panel{flex:0 0 82%;aspect-ratio:3/4;scroll-snap-align:center;transition:none}
+  .ind-panel img{filter:none;transform:none}
+  .ind-panel .rule{width:56px}
+  .ind-panel .sub{opacity:1;transform:none}
+  .ind-panel .desc{max-height:none;opacity:1;margin-top:8px}
+  .ind-hint{display:block}
+}
+/* ================= end INDUSTRIES accordion ============ */
+
+/* how it works */
+#how{background:#EAE8E1}
+#how .display{font-size:clamp(44px,5.4vw,84px);color:var(--ink);margin-bottom:54px}
+.steps-wrap{position:relative;padding-top:26px}
+.spine{position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-hot));transform:scaleX(0);transform-origin:left;transition:transform 1.2s var(--ease-out) .1s}
+.section.in .spine{transform:scaleX(1)}
+.spine::after{content:"";position:absolute;top:-3px;left:0;width:8px;height:8px;border-radius:50%;background:var(--gold-hot);box-shadow:0 0 14px var(--gold-hot);opacity:0}
+.section.in .spine::after{animation:fuelDot 5.5s linear 1.4s infinite}
+@keyframes fuelDot{0%{left:0;opacity:0}6%{opacity:1}94%{opacity:1}100%{left:calc(100% - 8px);opacity:0}}
+.steps-c{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,1.6vw,24px)}
+.step-c{position:relative;background:var(--ivory);padding:26px 24px 20px;display:flex;flex-direction:column;justify-content:space-between;min-height:250px;opacity:0;transform:translateY(30px);transition:opacity .8s var(--ease-out),transform .8s var(--ease-out),box-shadow .35s var(--ease-out)}
+.step-c::before{content:"";position:absolute;top:0;left:0;height:2px;width:0;background:var(--gold);transition:width .7s var(--ease-out)}
+.section.in .step-c{opacity:1;transform:none}
+.section.in .step-c::before{width:100%}
+.step-c:nth-child(1){transition-delay:.15s} .section.in .step-c:nth-child(1)::before{transition-delay:.25s}
+.step-c:nth-child(2){transition-delay:.3s}  .section.in .step-c:nth-child(2)::before{transition-delay:.4s}
+.step-c:nth-child(3){transition-delay:.45s} .section.in .step-c:nth-child(3)::before{transition-delay:.55s}
+.step-c:nth-child(4){transition-delay:.6s}  .section.in .step-c:nth-child(4)::before{transition-delay:.7s}
+.step-c:hover{transform:translateY(-5px);box-shadow:0 18px 40px rgba(10,16,53,.14)}
+.step-c p{font-size:13.5px;color:#3d4258}
+.step-c p a{color:#9a7420;text-decoration:underline}
+.step-c .num{overflow:hidden;margin-top:22px}
+.step-c .num span{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;font-size:58px;color:var(--ink);line-height:1;transform:translateY(115%);transition:transform .9s var(--ease-out)}
+.section.in .step-c:nth-child(1) .num span{transform:none;transition-delay:.35s}
+.section.in .step-c:nth-child(2) .num span{transform:none;transition-delay:.5s}
+.section.in .step-c:nth-child(3) .num span{transform:none;transition-delay:.65s}
+.section.in .step-c:nth-child(4) .num span{transform:none;transition-delay:.8s}
+
+/* ============ CASE STACK (sticky stacking cards) ============
+   Three parts: this CSS block, the #work markup, the script at the
+   bottom. Tune the vars on #work, nothing else.
+   ============================================================= */
+#work{
+  --img-a:clamp(120px,min(15vw,21vh),220px);  /* short tile, left column */
+  --img-b:clamp(150px,min(21vw,29vh),300px);  /* tall tile, left column */
+  --peek:26px;          /* vertical offset per card in the pile */
+  --radius:0px;         /* set 44px for the soft-cornered variant */
+  --park:104px;         /* where a card parks under the fixed header */
+  display:block;        /* .section is flex, sticky needs block flow */
+  min-height:0;
+  background:var(--ivory);
+  padding:96px clamp(22px,6vw,90px) 40px;
+}
+#work .wrap-c{margin-bottom:clamp(34px,4vw,58px)}
+#work .display{font-size:clamp(44px,5.4vw,84px);color:var(--ink)}
+
+.stack-slot{height:85vh;position:sticky;top:var(--park)}
+.stack-card{
+  position:relative;
+  top:calc(var(--i) * var(--peek));
+  background:var(--ink);
+  border:1px solid rgba(232,163,61,.34);
+  border-radius:var(--radius);
+  padding:clamp(20px,2.2vw,34px);
+  will-change:transform;
+}
+.stack-card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),transparent);
+}
+
+.stack-top{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:clamp(16px,1.8vw,26px)}
+.stack-id{display:flex;align-items:center;gap:clamp(16px,2vw,30px)}
+.stack-num{
+  font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;
+  font-size:clamp(56px,7vw,112px);line-height:.86;color:#fff;
+}
+.stack-meta{display:flex;flex-direction:column;gap:4px}
+.stack-cat{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-hot)}
+.stack-name{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-style:italic;
+  text-transform:uppercase;font-size:clamp(24px,2.4vw,38px);line-height:1;color:#fff;
+}
+.stack-btn{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-style:italic;
+  text-transform:uppercase;letter-spacing:.1em;font-size:15px;
+  padding:11px 26px;border:1px solid rgba(244,243,239,.55);color:var(--ivory);
+  white-space:nowrap;transition:background .3s,color .3s,border-color .3s;
+}
+.stack-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+
+.stack-grid{
+  display:grid;grid-template-columns:40fr 60fr;
+  gap:clamp(10px,1.2vw,16px);
+  height:calc(var(--img-a) + var(--img-b) + clamp(10px,1.2vw,16px));
+}
+.stack-col{display:flex;flex-direction:column;gap:clamp(10px,1.2vw,16px)}
+.stack-grid figure{position:relative;overflow:hidden;background:#050818}
+.stack-grid img{width:100%;height:100%;object-fit:cover;opacity:.9;transition:transform .7s var(--ease-out),opacity .5s}
+.stack-card:hover .stack-grid img{opacity:1}
+.stack-grid figure:hover img{transform:scale(1.05)}
+.stack-col figure:first-child{height:var(--img-a)}
+.stack-col figure:last-child{height:var(--img-b)}
+
+@media (max-width:900px){
+  #work{--park:84px;padding-top:70px}
+  .stack-slot{height:92vh;height:92svh}
+  .stack-grid{grid-template-columns:1fr;height:auto}
+  .stack-col{flex-direction:row}
+  .stack-col figure{flex:1}
+  .stack-col figure:first-child,.stack-col figure:last-child{height:150px}
+  .stack-tall{height:220px}
+  .stack-btn{padding:9px 18px;font-size:13px}
+}
+@media (prefers-reduced-motion:reduce){
+  .stack-card{transform:none!important}
+}
+/* ===================== end CASE STACK ====================== */
+
+/* cta band */
+#cta{background:var(--ink);color:#fff;position:relative;overflow:hidden}
+#cta::before{content:"";position:absolute;inset:0;background:radial-gradient(70% 120% at 85% 50%,rgba(232,163,61,.22),transparent 60%)}
+#cta .wrap-c{position:relative;display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap}
+#cta .display{font-size:clamp(48px,6.4vw,100px);color:#fff}
+#cta .display em{color:var(--gold-hot);font-style:italic}
+#cta .phone{font-family:'IBM Plex Mono',monospace;font-size:14px;letter-spacing:.12em;color:rgba(244,243,239,.8);margin-top:18px}
+.cta-line{display:block;overflow:hidden}
+.cta-line > span{display:block;transform:translateY(112%);transition:transform 1s var(--ease-out)}
+.section.in .cta-line:nth-child(1) > span{transform:none;transition-delay:.1s}
+.section.in .cta-line:nth-child(2) > span{transform:none;transition-delay:.24s}
+#cta .btn-gold{animation:ctaGlow 3.6s ease-in-out infinite}
+@keyframes ctaGlow{0%,100%{box-shadow:0 0 34px rgba(232,163,61,.32)}50%{box-shadow:0 0 58px rgba(232,163,61,.6)}}
+#cta{padding-bottom:130px}
+#cta .marq{position:absolute;left:0;right:0;bottom:18px;overflow:hidden;pointer-events:none}
+#cta .marq .track{display:inline-flex;white-space:nowrap;animation:marq 38s linear infinite;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;text-transform:uppercase;font-size:clamp(18px,1.6vw,22px);letter-spacing:.24em;color:rgba(244,243,239,.95);text-shadow:0 1px 14px rgba(5,8,24,.55)}
+#cta .marq .track em{font-style:inherit;color:var(--gold-hot)}
+#cta .marq .track span{flex:none}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* response card fills the right side of the CTA */
+.cta-card{
+  position:relative;min-width:min(430px,100%);
+  border:1px solid rgba(244,243,239,.3);background:rgba(5,8,24,.5);
+  padding:24px 26px 26px;
+}
+.cta-card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),transparent);
+}
+.cta-card .chev{
+  font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;
+  color:var(--gold-hot);font-size:20px;letter-spacing:.06em;margin-bottom:6px;
+}
+.cta-row{display:flex;align-items:baseline;justify-content:space-between;gap:18px;padding:11px 0;border-bottom:1px solid rgba(244,243,239,.14)}
+.cta-row .k{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:rgba(244,243,239,.55)}
+.cta-row .v{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-style:italic;text-transform:uppercase;font-size:19px;color:#fff;white-space:nowrap}
+.cta-row .v.gold{color:var(--gold-hot)}
+.cta-card .btn-gold{display:block;text-align:center;margin-top:20px}
+
+/* footer */
+footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6vw,90px) 0}
+.foot-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1.2fr;gap:48px;padding-bottom:56px}
+.foot-grid img{width:130px;filter:brightness(0) invert(1);margin-bottom:20px}
+.foot-grid p{font-size:13px;color:rgba(244,243,239,.62);max-width:320px}
+.foot-grid h4{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-style:italic;text-transform:uppercase;font-size:19px;margin-bottom:18px;color:#fff}
+.foot-grid ul{list-style:none}
+.foot-grid li{font-size:13px;color:rgba(244,243,239,.72);margin-bottom:10px}
+.foot-grid li a:hover{color:var(--gold-hot)}
+.offices li{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.02em;color:rgba(244,243,239,.6)}
+.offices .city{color:var(--gold-hot)}
+.foot-bar{border-top:1px solid rgba(244,243,239,.12);padding:18px 0;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:rgba(244,243,239,.45)}
+
+@media (max-width:920px){
+  .head-phone{display:none}
+  .steps-c{grid-template-columns:1fr 1fr}
+  .step-c{min-height:180px}
+  .beat--finale{bottom:10vh}
+  #film-scroll{height:780vh}
+}
+@media (max-width:560px){
+  .steps-c{grid-template-columns:1fr;gap:12px}
+  /* compact rows: numeral beside copy, no dead air */
+  .step-c{flex-direction:row;align-items:center;justify-content:flex-start;gap:18px;min-height:0;padding:18px 18px}
+  .step-c .num{margin-top:0;flex:none;order:-1;width:64px}
+  .step-c .num span{font-size:44px}
+  .step-c p{font-size:14px}
+  .beat h2{font-size:clamp(38px,11vw,54px)}
+  .beat::before{inset:-40% -20% -40% -12%;background:radial-gradient(80% 70% at 35% 50%,rgba(4,6,18,.78),rgba(4,6,18,.45) 55%,transparent 82%)}
+  .beat p{font-size:14px}
+  .beat--hero .wordmark{width:min(240px,62vw)}
+  .beat--finale{bottom:12vh}
+}
+@media (prefers-reduced-motion: reduce){
+  #scrollcue::after{animation:none}
+  .section .wrap-c > *,.section .stag > *{opacity:1;transform:none;transition:none}
+  .btn-gold::after{display:none}
+  .step-c,.step-c .num span{opacity:1;transform:none;transition:none}
+  .spine{transform:scaleX(1);transition:none}
+  .section.in .spine::after{animation:none;opacity:0}
+  .step-c::before{width:100%;transition:none}
+  .cta-line > span{transform:none;transition:none}
+  #cta .btn-gold{animation:none}
+  #cta .marq .track{animation:none}
+}
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <img src="assets/logo-white.png" alt="Fuel 2 Go">
+  <div id="loadbar"><i></i></div>
+  <div id="loadpct">0%</div>
+</div>
+
+<header id="header">
+  <a class="brand" href="#"><img src="assets/logo.png" alt="Fuel 2 Go"></a>
+  <div class="head-right">
+    <a class="head-phone" href="tel:+61738352460">+61 7 3835 2460</a>
+    <a class="head-cta" href="#cta">Get Started</a>
+  </div>
+</header>
+
+<div id="readout"><span class="ch" id="ch-label">01 — THE DROP</span><span class="bar"><i id="ch-bar"></i></span></div>
+<div id="scrollcue">Scroll</div>
+
+<div id="film-scroll">
+  <div id="stage">
+    <canvas id="film"></canvas>
+    <canvas id="grain"></canvas>
+    <div id="vignette"></div>
+
+    <div class="beat beat--hero" data-in="-0.1" data-peak="0" data-out="0.085">
+      <img class="wordmark" src="assets/logo.png" alt="Fuel 2 Go">
+      <h2>One drop in<br>every litre.</h2>
+      <p>Fuel2Go Diesel Additive, blended into every delivery of diesel we make across Australia and New Zealand.</p>
+    </div>
+
+    <div class="beat beat--left" data-in="0.14" data-peak="0.205" data-out="0.27">
+      <div class="kick">Fuel2Go Diesel Additive</div>
+      <h2>Cleaner fuel<br>from the first pour.</h2>
+      <p>Treated diesel resists contamination and waxing before it ever reaches the engine.</p>
+    </div>
+
+    <div class="beat beat--left" data-in="0.32" data-peak="0.385" data-out="0.45">
+      <div class="kick">Through the whole system</div>
+      <h2>Injectors and filters,<br>protected.</h2>
+      <p>Detergent chemistry keeps lines, filters and injectors free of deposits, delivery after delivery.</p>
+    </div>
+
+    <div class="beat beat--left" data-in="0.50" data-peak="0.565" data-out="0.63">
+      <div class="kick">Inside the engine</div>
+      <h2>A stronger,<br>cleaner burn.</h2>
+      <p>Improved combustion means full power from every litre, with less smoke and less wear.</p>
+    </div>
+
+    <div class="beat beat--left" data-in="0.68" data-peak="0.745" data-out="0.81">
+      <div class="kick">The result</div>
+      <h2>More kilometres<br>per tank.</h2>
+      <p>Fleets running treated diesel go further between fills. That is the whole point.</p>
+    </div>
+
+    <div class="beat beat--finale" data-in="0.87" data-peak="0.95" data-out="2">
+      <div class="kick">Diesel, delivered treated</div>
+      <h2>The long road<br>is ours.</h2>
+      <div class="cta-row">
+        <a class="btn-gold" href="#cta">Start your enquiry</a>
+        <a class="btn-line" href="tel:+61738352460">+61 7 3835 2460</a>
+      </div>
+    </div>
+
+    <div id="handoff"></div>
+  </div>
+</div>
+
+<div id="content">
+  <div id="landing"></div>
+
+  <!-- ================== SERVICE PILLARS markup ================== -->
+  <section id="services">
+    <div class="pillar-pin">
+      <div class="pillar-track" id="pillarTrack">
+
+        <article class="pillar pillar--ink">
+          <div class="pillar-grid">
+            <div>
+              <span class="pillar-chip">Service 01 of 03</span>
+              <h3 class="pillar-word">Delivery</h3>
+              <div class="pillar-sub">Diesel fuel delivery</div>
+              <div class="pillar-quip">Supply and delivery of additive-treated diesel fuel direct to your site, on your schedule.</div>
+              <div class="pillar-count">Scroll — 01 / 03</div>
+            </div>
+            <figure class="pillar-fig">
+              <img src="assets/svc-delivery.jpg" alt="Fuel2Go tanker delivering diesel at dusk" loading="lazy">
+              <span class="fig-chip">On schedule</span>
+            </figure>
+          </div>
+        </article>
+
+        <article class="pillar pillar--gold">
+          <div class="pillar-grid">
+            <div>
+              <span class="pillar-chip">Service 02 of 03</span>
+              <h3 class="pillar-word">Storage</h3>
+              <div class="pillar-sub">Onsite tank installation</div>
+              <div class="pillar-quip">Diesel tanks installed and tailored to your operation's needs. Conditions apply.</div>
+              <div class="pillar-count">Scroll — 02 / 03</div>
+            </div>
+            <figure class="pillar-fig">
+              <img src="assets/svc-storage.jpg" alt="Containerised diesel tank installed onsite" loading="lazy">
+              <span class="fig-chip">Self-bunded</span>
+            </figure>
+          </div>
+        </article>
+
+        <article class="pillar pillar--ivory">
+          <div class="pillar-grid">
+            <div>
+              <span class="pillar-chip">Service 03 of 03</span>
+              <h3 class="pillar-word">Hire</h3>
+              <div class="pillar-sub">Tank hire and rent-to-own</div>
+              <div class="pillar-quip">Flexible storage for short or long-term projects, from hire to ownership.</div>
+              <div class="pillar-count">Scroll — 03 / 03</div>
+            </div>
+            <figure class="pillar-fig">
+              <img src="assets/svc-hire.jpg" alt="Fuel2Go tank fleet ready for hire" loading="lazy">
+              <span class="fig-chip">Hire to own</span>
+            </figure>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+  <!-- ================ end SERVICE PILLARS markup ================ -->
+
+  <!-- ================== X-RAY markup ================== -->
+  <section id="xray">
+    <video src="assets/xray-loop.mp4" poster="assets/xray-poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
+    <div class="xray-scrim"></div>
+    <div class="xray-copy">
+      <div class="kick-c">The additive advantage</div>
+      <h2 class="display">See inside<br>every litre.</h2>
+      <p class="xray-sub">Additive-treated diesel in circulation: cleaner injectors, a cleaner burn, more kilometres from every tank.</p>
+    </div>
+    <div class="xray-tag">X-RAY — FUEL CIRCUIT / LIVE</div>
+  </section>
+  <!-- ================ end X-RAY markup ================ -->
+
+  <section class="section" id="industries">
+    <div class="wrap-c">
+      <div class="kick-c">Industries we serve</div>
+      <h2 class="display">Built for the<br>heavy end.</h2>
+      <div class="ind-acc" id="indAcc">
+        <!-- the two ind- filenames are swapped on disk: ind-mining.webp is the truck, ind-transport.webp is the excavator -->
+        <div class="ind-panel on">
+          <img src="assets/ind-mining.webp" alt="Transport">
+          <div class="ind-copy2"><div class="tag">Transport</div><div class="rule"></div><div class="sub">Linehaul and fleet</div><div class="desc">Linehaul fleets running additive-treated diesel, delivered on your schedule.</div></div>
+        </div>
+        <div class="ind-panel">
+          <img src="assets/ind-transport.webp" alt="Mining">
+          <div class="ind-copy2"><div class="tag">Mining</div><div class="rule"></div><div class="sub">Pit to port</div><div class="desc">Remote pits kept fuelled with onsite storage and reliable resupply.</div></div>
+        </div>
+        <div class="ind-panel">
+          <img src="assets/ind-construction.webp" alt="Construction">
+          <div class="ind-copy2"><div class="tag">Construction</div><div class="rule"></div><div class="sub">Civil and site works</div><div class="desc">Site tanks and treated diesel for civil, earthworks and build programs.</div></div>
+        </div>
+      </div>
+      <div class="ind-hint">Swipe across the industries</div>
+    </div>
+  </section>
+
+  <!-- ================== CASE STACK markup ================== -->
+  <section class="section" id="work">
+    <div class="wrap-c">
+      <div class="kick-c">Case studies</div>
+      <h2 class="display">Fuel where<br>the work is.</h2>
+    </div>
+
+    <div class="stack-track" id="stackTrack">
+
+      <div class="stack-slot">
+        <article class="stack-card" style="--i:0">
+          <div class="stack-top">
+            <div class="stack-id">
+              <span class="stack-num">01</span>
+              <div class="stack-meta">
+                <span class="stack-cat">Transport</span>
+                <span class="stack-name">Fleet refuelling</span>
+              </div>
+            </div>
+            <a class="stack-btn" href="#cta">View service</a>
+          </div>
+          <div class="stack-grid">
+            <div class="stack-col">
+              <figure><img src="assets/frames/f_0540.jpg" alt="Tanker running an outback highway at dusk" loading="lazy"></figure>
+              <figure><img src="assets/frames/f_0430.jpg" alt="Fuel trail behind a linehaul tanker" loading="lazy"></figure>
+            </div>
+            <!-- ind-mining.webp is the highway truck shot, the two ind- filenames are swapped -->
+            <figure class="stack-tall"><img src="assets/ind-mining.webp" alt="Fuel2Go transport fleet" loading="lazy"></figure>
+          </div>
+        </article>
+      </div>
+
+      <div class="stack-slot">
+        <article class="stack-card" style="--i:1">
+          <div class="stack-top">
+            <div class="stack-id">
+              <span class="stack-num">02</span>
+              <div class="stack-meta">
+                <span class="stack-cat">Mining</span>
+                <span class="stack-name">Remote site supply</span>
+              </div>
+            </div>
+            <a class="stack-btn" href="#cta">View service</a>
+          </div>
+          <div class="stack-grid">
+            <div class="stack-col">
+              <figure><img src="assets/frames/f_0230.jpg" alt="Fuel moving through a tanker barrel" loading="lazy"></figure>
+              <figure><img src="assets/frames/f_0140.jpg" alt="Fuel spreading across open ground" loading="lazy"></figure>
+            </div>
+            <!-- ind-transport.webp is the excavator shot, the two ind- filenames are swapped -->
+            <figure class="stack-tall"><img src="assets/ind-transport.webp" alt="Fuel2Go mining site supply" loading="lazy"></figure>
+          </div>
+        </article>
+      </div>
+
+      <div class="stack-slot">
+        <article class="stack-card" style="--i:2">
+          <div class="stack-top">
+            <div class="stack-id">
+              <span class="stack-num">03</span>
+              <div class="stack-meta">
+                <span class="stack-cat">Construction</span>
+                <span class="stack-name">On-site storage</span>
+              </div>
+            </div>
+            <a class="stack-btn" href="#cta">View service</a>
+          </div>
+          <div class="stack-grid">
+            <div class="stack-col">
+              <figure><img src="assets/frames/f_0330.jpg" alt="Pistons firing on clean diesel" loading="lazy"></figure>
+              <figure><img src="assets/frames/f_0060.jpg" alt="Diesel settling inside a storage tank" loading="lazy"></figure>
+            </div>
+            <figure class="stack-tall"><img src="assets/ind-construction.webp" alt="Fuel2Go construction site storage" loading="lazy"></figure>
+          </div>
+        </article>
+      </div>
+
+    </div>
+  </section>
+  <!-- ================ end CASE STACK markup ================ -->
+
+  <section class="section" id="how">
+    <div class="wrap-c">
+      <div class="kick-c">How it works</div>
+      <h2 class="display">Getting started<br>is simple.</h2>
+      <div class="steps-wrap">
+        <div class="spine"></div>
+        <div class="steps-c">
+          <div class="step-c"><p>Submit your enquiry to admin@fuel2go.com.au or through the <a href="#cta">contact form</a>.</p><div class="num"><span>01</span></div></div>
+          <div class="step-c"><p>A team member will be in touch to discuss your requirements.</p><div class="num"><span>02</span></div></div>
+          <div class="step-c"><p>We set up your account and complete the onboarding process.</p><div class="num"><span>03</span></div></div>
+          <div class="step-c"><p>Tanks can be delivered on site within 14 days of account approval.</p><div class="num"><span>04</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="cta">
+    <div class="wrap-c">
+      <div>
+        <div class="kick-c" style="color:var(--gold-hot)">Need any help</div>
+        <h2 class="display"><span class="cta-line"><span>Start your</span></span><span class="cta-line"><span><em>enquiry.</em></span></span></h2>
+        <div class="phone">+61 7 3835 2460 · admin@fuel2go.com.au</div>
+      </div>
+      <div class="cta-card">
+        <div class="chev">FUEL 2 GO &gt;&gt;&gt;</div>
+        <div class="cta-row"><span class="k">Response</span><span class="v">Within 24 hours</span></div>
+        <div class="cta-row"><span class="k">Coverage</span><span class="v">Australia + NZ</span></div>
+        <div class="cta-row"><span class="k">Tanks on site</span><span class="v gold">14 days</span></div>
+        <div class="cta-row"><span class="k">Diesel</span><span class="v">Additive-treated</span></div>
+        <a class="btn-gold" href="mailto:admin@fuel2go.com.au">Email the team</a>
+      </div>
+    </div>
+    <div class="marq" aria-hidden="true"><div class="track"><span>More kilometres per tank <em>&nbsp;·&nbsp;</em> Cleaner burn <em>&nbsp;·&nbsp;</em> Additive in every litre <em>&nbsp;·&nbsp;</em> Australia + New Zealand <em>&nbsp;·&nbsp;</em> </span><span>More kilometres per tank <em>&nbsp;·&nbsp;</em> Cleaner burn <em>&nbsp;·&nbsp;</em> Additive in every litre <em>&nbsp;·&nbsp;</em> Australia + New Zealand <em>&nbsp;·&nbsp;</em> </span></div></div>
+  </section>
+
+  <footer>
+    <div class="foot-grid">
+      <div>
+        <img src="assets/logo.png" alt="Fuel 2 Go">
+        <p>Trusted diesel fuel and additive supplier to transport, mining and construction across Australia and New Zealand.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#services">Our Services</a></li>
+          <li><a href="#industries">Industries</a></li>
+          <li><a href="#cta">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Locations</h4>
+        <ul class="offices">
+          <li><span class="city">PER</span> L14 / 197 St George Tce, Perth</li>
+          <li><span class="city">SYD</span> L11 / 6 Berry St, North Sydney</li>
+          <li><span class="city">BNE</span> L23 / 127 Creek St, Brisbane</li>
+          <li><span class="city">AKL</span> 11-19 Customs St West, Auckland</li>
+          <li><span class="city">CHC</span> 6 Hazeldean Rd, Christchurch</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bar">FUEL2GO © 2026 · ALL RIGHTS RESERVED</div>
+  </footer>
+</div>
+
+<script>
+/* ================= CONFIG (assemble step overwrites) ================= */
+var FRAME_DIR = 'assets/frames/';
+var FRAME_COUNT = 601;            /* set after head-trim */
+var FRAME_PAD = 4;
+var FRAME_VER = '6';              /* bump on every frame swap — busts cached 404s */
+var SEAM = '#241910';             /* sampled final-frame colour, set by assemble */
+var CHAPTERS = [
+  {at:0.00, label:'01 — THE DROP'},
+  {at:0.20, label:'02 — THE CLEAN'},
+  {at:0.40, label:'03 — THE LINE'},
+  {at:0.58, label:'04 — THE BURN'},
+  {at:0.74, label:'05 — THE LONG ROAD'}
+];
+
+document.documentElement.style.setProperty('--seam', SEAM);
+var JUMP = new URLSearchParams(location.search).get('jump');
+if (JUMP !== null) history.scrollRestoration = 'manual';
+
+var canvas = document.getElementById('film'), ctx = canvas.getContext('2d');
+var stage = document.getElementById('stage'), filmScroll = document.getElementById('film-scroll');
+var DPR = 1;   /* cap 1.0 — source matches canvas, not device pixels */
+
+function sizeCanvas(){
+  canvas.width = Math.round(stage.clientWidth * DPR);
+  canvas.height = Math.round(stage.clientHeight * DPR);
+}
+sizeCanvas();
+
+/* ---------- frame names ---------- */
+function fname(i){ var s = String(i+1); while (s.length < FRAME_PAD) s = '0' + s; return FRAME_DIR + 'f_' + s + '.jpg?v=' + FRAME_VER; }
+
+/* ---------- loader pump (concurrency-capped) ---------- */
+var images = new Array(FRAME_COUNT), loadedCount = 0, PUMP = 10, pumpIdx = 0;
+var loaderEl = document.getElementById('loader'), barEl = document.querySelector('#loadbar i'), pctEl = document.getElementById('loadpct');
+var PREFETCH = Math.min(FRAME_COUNT, 140);   /* gate first paint on the opening run only */
+var gateDone = false;
+
+function pump(){
+  while (pumpIdx < FRAME_COUNT){
+    var inFlight = 0;
+    for (var j = 0; j < FRAME_COUNT; j++) if (images[j] === 'loading') inFlight++;
+    if (inFlight >= PUMP) return;
+    var i = pumpIdx++;
+    (function(i){
+      var im = new Image(), tried = 0;
+      images[i] = 'loading';
+      im.onload = function(){ images[i] = im; loadedCount++; onLoad(i); pump(); };
+      im.onerror = function(){
+        if (++tried <= 2){ setTimeout(function(){ im.src = fname(i) + '&r=' + tried; }, 1200 * tried); return; }
+        images[i] = null; loadedCount++; onLoad(i); pump();
+      };
+      im.src = fname(i);
+    })(i);
+  }
+}
+function onLoad(){
+  var p = Math.min(1, loadedCount / PREFETCH);
+  barEl.style.width = (p * 100).toFixed(0) + '%';
+  pctEl.textContent = (p * 100).toFixed(0) + '%';
+  /* boot the moment the opening frame exists — the film starts on scene one, never on black */
+  if (!gateDone && (images[0] instanceof Image || loadedCount >= 40)){ gateDone = true; boot(); }
+  if (gateDone && loadedCount >= PREFETCH) loaderEl.classList.add('done');
+}
+
+/* ---------- ImageBitmap sliding window ---------- */
+var bitmaps = new Map(), decoding = new Set();
+/* memory budget: phones keep a much smaller decoded window than desktop */
+var SMALL = Math.min(screen.width, screen.height) <= 900;
+var FPS = 24;
+var B_AHEAD = SMALL ? 22 : Math.round(FPS * 2);
+var B_KEEP  = SMALL ? 26 : Math.round(FPS * 2.2);
+var MAX_DECODING = 8;              /* cap parallel decodes so fast scrubs can't queue hundreds */
+var bmpCenter = -999;
+var displayed = -1;
+function ensureBitmaps(center){
+  if (Math.abs(center - bmpCenter) < 3) return;
+  bmpCenter = center;
+  var lo = Math.max(0, center - Math.round(B_AHEAD * 0.6)), hi = Math.min(FRAME_COUNT - 1, center + B_AHEAD);
+  for (var i = lo; i <= hi; i++){
+    if (decoding.size >= MAX_DECODING) break;
+    if (bitmaps.has(i) || decoding.has(i) || !(images[i] instanceof Image)) continue;
+    decoding.add(i);
+    (function(i){
+      createImageBitmap(images[i]).then(function(b){
+        decoding.delete(i);
+        if (Math.abs(i - bmpCenter) > B_KEEP){ b.close(); refill(); return; }
+        bitmaps.set(i, b);
+        if (i === displayed) drawFrame(i, true);
+        refill();
+      }).catch(function(){ decoding.delete(i); refill(); });
+    })(i);
+  }
+  bitmaps.forEach(function(b, k){
+    if (k < center - B_KEEP || k > center + B_KEEP){ b.close(); bitmaps.delete(k); }
+  });
+}
+/* re-enter the fill loop as decode slots free up (the cap breaks out early) */
+function refill(){
+  if (decoding.size >= MAX_DECODING) return;
+  var c = bmpCenter; bmpCenter = -999; ensureBitmaps(c);
+}
+function nearestFrame(idx){
+  if (bitmaps.has(idx)) return bitmaps.get(idx);
+  /* bitmaps only — drawing raw Images forces synchronous 1600px JPEG
+     decodes at scroll speed, which is what OOM-killed the tab on phones */
+  for (var d = 1; d < FRAME_COUNT; d++){
+    if (bitmaps.has(idx - d)) return bitmaps.get(idx - d);
+    if (bitmaps.has(idx + d)) return bitmaps.get(idx + d);
+  }
+  /* cold start only: no bitmap exists anywhere yet */
+  for (var e = 0; e < FRAME_COUNT; e++){
+    if (images[idx - e] instanceof Image) return images[idx - e];
+    if (images[idx + e] instanceof Image) return images[idx + e];
+  }
+  return null;
+}
+var MAX_CROP = 0.22;
+function drawFrame(idx, force){
+  var bm = bitmaps.get(idx) || nearestFrame(idx);
+  if (!bm) return;
+  if (idx === displayed && !force) return;
+  displayed = idx;
+  var w = bm.width, h = bm.height, cw = canvas.width, ch = canvas.height;
+  var portrait = ch > cw;
+  var sCover = Math.max(cw / w, ch / h);
+  var s, dx, dy;
+  if (portrait){
+    /* phones: always fill the screen; slide the crop toward the truck in ch4-5 */
+    s = sCover;
+    var dw0 = w * s, dh0 = h * s;
+    var fx = progress >= 0.55 ? 0.62 : 0.5;
+    dx = Math.min(0, Math.max(cw - dw0, -(dw0 - cw) * fx));
+    dy = (ch - dh0) / 2;
+  } else {
+    var crop = 1 - Math.min(cw / (w * sCover), ch / (h * sCover));
+    s = crop > MAX_CROP ? Math.min(cw / w, ch / h) : sCover;
+    dx = (cw - w * s) / 2;
+    dy = (ch - h * s) / 2;
+  }
+  var dw = w * s, dh = h * s;
+  ctx.fillStyle = '#050818';
+  ctx.fillRect(0, 0, cw, ch);
+  ctx.drawImage(bm, dx, dy, dw, dh);
+}
+
+/* ---------- grain ---------- */
+var gCan = document.getElementById('grain'), gCtx = gCan.getContext('2d');
+function makeGrain(){
+  gCan.width = 220; gCan.height = 220;
+  var d = gCtx.createImageData(220, 220);
+  for (var i = 0; i < d.data.length; i += 4){
+    var v = 118 + Math.random() * 34 | 0;
+    d.data[i] = d.data[i+1] = d.data[i+2] = v; d.data[i+3] = 26;
+  }
+  gCtx.putImageData(d, 0, 0);
+}
+makeGrain();
+
+/* ---------- scroll / progress ---------- */
+var target = 0, current = 0, progress = 0;
+function computeProgress(){
+  var r = filmScroll.getBoundingClientRect();
+  progress = Math.max(0, Math.min(1, -r.top / (r.height - innerHeight)));
+  target = progress * (FRAME_COUNT - 1);
+}
+
+/* ---------- beats ---------- */
+var beats = Array.prototype.map.call(document.querySelectorAll('.beat'), function(el){
+  return { el: el, i: +el.dataset.in, pk: +el.dataset.peak, o: +el.dataset.out };
+});
+function beatAlpha(b, p){
+  if (p < b.i || p > b.o) return 0;
+  if (p < b.pk) return (p - b.i) / Math.max(1e-4, b.pk - b.i);
+  if (b.o > 1.5) return 1;
+  return 1 - (p - b.pk) / Math.max(1e-4, b.o - b.pk);
+}
+
+/* ---------- chapter readout + header luminance ---------- */
+var chLabel = document.getElementById('ch-label'), chBar = document.getElementById('ch-bar');
+var readout = document.getElementById('readout'), cue = document.getElementById('scrollcue');
+var header = document.getElementById('header');
+var lumCan = document.createElement('canvas'); lumCan.width = 16; lumCan.height = 4;
+var lumCtx = lumCan.getContext('2d', { willReadFrequently: true });
+var lastLum = 0;
+function sampleLuminance(now){
+  if (now - lastLum < 180) return;
+  lastLum = now;
+  try{
+    lumCtx.drawImage(canvas, 0, 0, canvas.width, Math.max(1, canvas.height * 0.14), 0, 0, 16, 4);
+    var d = lumCtx.getImageData(0, 0, 16, 4).data, sum = 0;
+    for (var i = 0; i < d.length; i += 4) sum += 0.2126 * d[i] + 0.7152 * d[i+1] + 0.0722 * d[i+2];
+    var avg = sum / (d.length / 4);
+    header.classList.toggle('on-light', avg > 138 && progress > 0.02);
+  }catch(e){}
+}
+
+/* ---------- handoff + vignette fade ---------- */
+var handoff = document.getElementById('handoff'), vignette = document.getElementById('vignette');
+
+/* ---------- jank meter ---------- */
+var lastT = 0, worst = 0, lastLog = 0;
+
+/* ---------- main tick ---------- */
+function tick(now){
+  computeProgress();
+  current += (target - current) * 0.14;
+  var idx = Math.max(0, Math.min(FRAME_COUNT - 1, Math.round(current)));
+  ensureBitmaps(idx);
+  drawFrame(idx, false);
+  sampleLuminance(now);
+
+  for (var i = 0; i < beats.length; i++){
+    var a = beatAlpha(beats[i], progress);
+    var el = beats[i].el;
+    el.style.opacity = a.toFixed(3);
+    var dir = progress < beats[i].pk ? 1 : -1;
+    var base = el.classList.contains('beat--finale') ? '' : 'translateY(-50%) ';
+    el.style.transform = base + 'translateY(' + ((1 - a) * 14 * dir) + 'px)';
+  }
+
+  var ch = CHAPTERS[0];
+  for (var c = 0; c < CHAPTERS.length; c++) if (progress >= CHAPTERS[c].at) ch = CHAPTERS[c];
+  if (chLabel.textContent !== ch.label) chLabel.textContent = ch.label;
+  chBar.style.width = (progress * 100).toFixed(1) + '%';
+  readout.classList.toggle('show', progress > 0.005 && progress < 0.985);
+  cue.classList.toggle('show', progress < 0.03);
+
+  var hf = Math.max(0, (progress - 0.92) / 0.08);
+  handoff.style.opacity = hf.toFixed(3);
+  vignette.style.opacity = (1 - hf).toFixed(3);
+  document.getElementById('grain').style.opacity = (0.5 * (1 - hf)).toFixed(3);
+
+  if (lastT){
+    var dt = now - lastT;
+    if (dt > worst) worst = dt;
+    if (now - lastLog > 2000){ if (worst > 0) console.log('[jank] max rAF delta ' + worst.toFixed(1) + 'ms'); worst = 0; lastLog = now; }
+  }
+  lastT = now;
+  requestAnimationFrame(tick);
+}
+
+/* ---------- reveal sections ---------- */
+var REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+var io = new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if (e.isIntersecting){
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+}, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
+document.querySelectorAll('.section').forEach(function(s){ io.observe(s); });
+
+/* ---------- case stack ---------- */
+(function(){
+  var track = document.getElementById('stackTrack');
+  if (!track) return;
+  var cards = track.querySelectorAll('.stack-card');
+  var total = cards.length;
+  var queued = false;
+
+  function clamp01(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
+
+  function update(){
+    queued = false;
+    var r = track.getBoundingClientRect();
+    var span = r.height - window.innerHeight;
+    var progress = span > 0 ? clamp01(-r.top / span) : 0;
+    for (var i = 0; i < total; i++){
+      var target = 1 - (total - 1 - i) * 0.03;
+      var start = i / total;
+      var p = clamp01((progress - start) / (1 - start));
+      cards[i].style.transform = 'scale(' + (1 + (target - 1) * p) + ')';
+    }
+  }
+
+  function onScroll(){ if (!queued){ queued = true; requestAnimationFrame(update); } }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
+})();
+
+/* ---------- x-ray film: honour reduced motion ---------- */
+(function(){
+  var v = document.querySelector('#xray video');
+  if (v && window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    v.removeAttribute('autoplay'); v.pause();
+  }
+})();
+
+/* ---------- industries accordion ---------- */
+(function(){
+  var acc = document.getElementById('indAcc');
+  if (!acc) return;
+  var panels = acc.querySelectorAll('.ind-panel');
+  function activate(p){
+    for (var i = 0; i < panels.length; i++) panels[i].classList.toggle('on', panels[i] === p);
+  }
+  for (var i = 0; i < panels.length; i++) (function(p){
+    p.addEventListener('mouseenter', function(){ if (window.matchMedia('(hover: hover)').matches) activate(p); });
+    p.addEventListener('click', function(){ activate(p); });
+  })(panels[i]);
+})();
+
+/* ---------- service pillars (horizontal scroll) ---------- */
+(function(){
+  var sec = document.getElementById('services');
+  var track = document.getElementById('pillarTrack');
+  if (!sec || !track) return;
+  var queued = false;
+
+  function clamp01(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
+
+  function update(){
+    queued = false;
+    var r = sec.getBoundingClientRect();
+    var span = r.height - window.innerHeight;
+    var p = span > 0 ? clamp01(-r.top / span) : 0;
+    var travel = track.scrollWidth - window.innerWidth;
+    track.style.transform = 'translate3d(' + (-p * travel) + 'px,0,0)';
+  }
+
+  function onScroll(){ if (!queued){ queued = true; requestAnimationFrame(update); } }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
+})();
+
+/* ---------- boot ---------- */
+var booted = false;
+function boot(){
+  if (booted) return; booted = true;
+  ensureBitmaps(0);
+  computeProgress();
+  current = target;
+  requestAnimationFrame(tick);
+  setTimeout(function(){
+    if (JUMP !== null){
+      scrollTo(0, +JUMP || 0);
+      computeProgress();
+      current = target;
+      var idx = Math.round(current);
+      ensureBitmaps(idx);
+      var tries = 0;
+      (function settle(){
+        drawFrame(Math.round(current), true);
+        if (++tries < 30 && !bitmaps.has(Math.round(current))) return setTimeout(settle, 100);
+        window.__ready = true;
+      })();
+    } else {
+      window.__ready = true;
+    }
+  }, 350);
+}
+addEventListener('resize', function(){ sizeCanvas(); drawFrame(displayed, true); });
+pump();
+</script>
+</body>
+</html>
