@@ -393,6 +393,10 @@ header.on-light .head-phone{text-shadow:none}
 }
 .calc-input input::-webkit-outer-spin-button,.calc-input input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .calc-input input:focus{outline:2px solid var(--gold);outline-offset:-2px;border-color:var(--gold)}
+.calc-input input::placeholder{color:rgba(244,243,239,.42);font-size:.62em;font-style:normal;font-weight:500;letter-spacing:.04em}
+/* results sit back until a real figure is entered */
+.calc-out.idle .calc-big,.calc-out.idle .calc-num{opacity:.3}
+.calc-out.idle .calc-sub{opacity:.45}
 .calc-unit{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.18em;color:rgba(244,243,239,.8);font-weight:500;pointer-events:none}
 .calc-slider{margin-bottom:20px}
 .calc-slider .row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
@@ -886,7 +890,7 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
 
           <label class="calc-lbl" for="calcLitres">Diesel used <span id="periodLbl">per month</span></label>
           <div class="calc-input">
-            <input type="number" id="calcLitres" value="500000" min="0" step="1000" inputmode="numeric" aria-describedby="periodLbl">
+            <input type="number" id="calcLitres" value="" placeholder="Enter litres" min="0" step="1000" inputmode="numeric" aria-describedby="periodLbl">
             <span class="calc-unit">LITRES</span>
           </div>
 
@@ -1414,7 +1418,10 @@ document.querySelectorAll('.section').forEach(function(s){ io.observe(s); });
   }
 
   function calc(){
-    var litres = Math.max(0, parseFloat(elL.value) || 0);
+    var raw = elL.value.trim();
+    var litres = Math.max(0, parseFloat(raw) || 0);
+    var out = document.querySelector('.calc-out');
+    if (out) out.classList.toggle('idle', raw === '' || litres === 0);
     var price  = parseFloat(elPrice.value);
     var gain   = parseFloat(elGain.value) / 100;
 
