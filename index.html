@@ -408,12 +408,6 @@ header.on-light .head-phone{text-shadow:none}
 }
 .calc-slider input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--gold);border:0;box-shadow:0 0 0 4px rgba(232,163,61,.2)}
 .calc-slider input[type=range]:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
-.calc-preset{display:flex;gap:8px;flex-wrap:wrap;margin-top:-8px;margin-bottom:20px}
-.calc-preset button{
-  background:none;border:1px solid rgba(244,243,239,.34);color:rgba(244,243,239,.9);cursor:pointer;
-  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;padding:7px 11px;transition:all .25s;
-}
-.calc-preset button:hover{border-color:var(--gold);color:var(--gold-hot)}
 
 /* --- results --- */
 .calc-out{display:flex;flex-direction:column;gap:clamp(12px,1.5vw,18px)}
@@ -895,7 +889,6 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
             <input type="number" id="calcLitres" value="500000" min="0" step="1000" inputmode="numeric" aria-describedby="periodLbl">
             <span class="calc-unit">LITRES</span>
           </div>
-          <div class="calc-preset" id="calcPresets"></div>
 
           <div class="calc-slider">
             <div class="row"><span class="calc-lbl" style="margin:0" id="priceLbl">Diesel price</span><span class="val" id="priceVal">$2.20</span></div>
@@ -906,7 +899,7 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
             <div class="row"><span class="calc-lbl" style="margin:0" id="gainLbl">Fuel economy gain</span><span class="val" id="gainVal">7%</span></div>
             <input type="range" id="calcGain" min="5" max="10" step="0.5" value="7" aria-labelledby="gainLbl">
           </div>
-          <p class="calc-note">Fyrex CI is rated at a <b>5&ndash;10%</b> fuel economy improvement. 7% is the mid-case used in our worked example.</p>
+          <p class="calc-note">Fyrex CI is rated at a <b>5&ndash;10%</b> fuel economy improvement. Move the slider to see your range.</p>
         </div>
 
         <!-- results -->
@@ -1396,7 +1389,6 @@ document.querySelectorAll('.section').forEach(function(s){ io.observe(s); });
       CO2_PER_L = 2.72;
   var yearly = false;
 
-  var PRESETS = [1000000, 900000, 800000, 750000, 500000];
 
   function fmt(n, dp){
     return n.toLocaleString('en-AU', { minimumFractionDigits: dp || 0, maximumFractionDigits: dp || 0 });
@@ -1419,18 +1411,6 @@ document.querySelectorAll('.section').forEach(function(s){ io.observe(s); });
     anims[id] = to;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){ el.textContent = (prefix||'') + fmt(to, dp); return; }
     requestAnimationFrame(step);
-  }
-
-  function presets(){
-    var wrap = document.getElementById('calcPresets'); if (!wrap) return;
-    wrap.innerHTML = '';
-    PRESETS.forEach(function(v){
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.textContent = fmt(v) + ' L';
-      b.addEventListener('click', function(){ elL.value = v; calc(); });
-      wrap.appendChild(b);
-    });
   }
 
   function calc(){
@@ -1481,7 +1461,7 @@ document.querySelectorAll('.section').forEach(function(s){ io.observe(s); });
     yearly = toYear;
     segM.classList.toggle('on', !toYear); segM.setAttribute('aria-pressed', String(!toYear));
     segY.classList.toggle('on', toYear);  segY.setAttribute('aria-pressed', String(toYear));
-    presets(); calc();
+    calc();
   }
 
   segM.addEventListener('click', function(){ setPeriod(false); });
@@ -1490,7 +1470,7 @@ document.querySelectorAll('.section').forEach(function(s){ io.observe(s); });
     elL.addEventListener(ev, calc); elPrice.addEventListener(ev, calc); elGain.addEventListener(ev, calc);
   });
 
-  presets(); calc();
+  calc();
 })();
 
 /* ---------- enquiry drawer ---------- */
