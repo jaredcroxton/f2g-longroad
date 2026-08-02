@@ -368,40 +368,40 @@ header.on-light .head-phone{text-shadow:none}
 /* ===================== end CASE STACK ====================== */
 
 /* ============ SAVINGS CALCULATOR ============ */
-#calc{background:var(--ink);color:var(--ivory);padding:clamp(64px,9vh,120px) clamp(20px,6vw,90px)}
-#calc .display{font-size:clamp(38px,5vw,80px);color:#fff}
-#calc .kick-c{color:var(--gold-hot)}
-#calc .lede{color:rgba(244,243,239,.72);max-width:520px;margin-top:14px;font-size:clamp(14.5px,1.15vw,17px)}
+#calc{background:var(--ivory);color:var(--ink);padding:clamp(64px,9vh,120px) clamp(20px,6vw,90px)}
+#calc .display{font-size:clamp(38px,5vw,80px);color:var(--ink)}
+#calc .kick-c{color:#9a7420}
+#calc .lede{color:#3d4258;max-width:520px;margin-top:14px;font-size:clamp(14.5px,1.15vw,17px)}
 .calc-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(22px,3.4vw,56px);margin-top:clamp(30px,4vw,54px);align-items:start}
 
 /* --- controls --- */
-.calc-panel{background:rgba(244,243,239,.04);border:1px solid rgba(244,243,239,.14);padding:clamp(18px,2.2vw,30px)}
-.calc-seg{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid rgba(244,243,239,.3);margin-bottom:22px}
+.calc-panel{background:#fff;border:1px solid rgba(3,13,48,.14);box-shadow:0 10px 30px rgba(3,13,48,.06);padding:clamp(18px,2.2vw,30px)}
+.calc-seg{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid rgba(3,13,48,.22);margin-bottom:22px}
 .calc-seg button{
   background:none;border:0;cursor:pointer;padding:13px 8px;
   font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
-  color:rgba(244,243,239,.6);transition:background .3s,color .3s;
+  color:#6f7590;transition:background .3s,color .3s;
 }
 .calc-seg button.on{background:var(--gold);color:var(--ink);font-weight:500}
-.calc-lbl{display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:rgba(244,243,239,.55);margin-bottom:8px}
+.calc-lbl{display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#6f7590;margin-bottom:8px}
 .calc-input{position:relative;margin-bottom:22px}
 .calc-input input[type=number]{
-  width:100%;background:rgba(3,13,48,.6);border:1px solid rgba(244,243,239,.22);
-  color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;
+  width:100%;background:var(--ivory);border:1px solid rgba(3,13,48,.2);
+  color:var(--ink);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;
   font-size:clamp(30px,3.4vw,44px);padding:12px 62px 12px 14px;
   -moz-appearance:textfield;appearance:textfield;
 }
 .calc-input input::-webkit-outer-spin-button,.calc-input input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .calc-input input:focus{outline:2px solid var(--gold);outline-offset:-2px;border-color:var(--gold)}
-.calc-unit{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.18em;color:rgba(244,243,239,.5);pointer-events:none}
+.calc-unit{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.18em;color:#8a8f9f;pointer-events:none}
 .calc-slider{margin-bottom:20px}
 .calc-slider .row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
-.calc-slider .val{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;font-size:22px;color:var(--gold-hot)}
+.calc-slider .val{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;font-size:22px;color:#9a7420}
 .calc-slider input[type=range]{
   width:100%;-webkit-appearance:none;appearance:none;background:transparent;height:26px;cursor:pointer;
 }
-.calc-slider input[type=range]::-webkit-slider-runnable-track{height:2px;background:rgba(244,243,239,.25)}
-.calc-slider input[type=range]::-moz-range-track{height:2px;background:rgba(244,243,239,.25)}
+.calc-slider input[type=range]::-webkit-slider-runnable-track{height:2px;background:rgba(3,13,48,.18)}
+.calc-slider input[type=range]::-moz-range-track{height:2px;background:rgba(3,13,48,.18)}
 .calc-slider input[type=range]::-webkit-slider-thumb{
   -webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;
   background:var(--gold);border:0;margin-top:-9px;box-shadow:0 0 0 4px rgba(232,163,61,.2);
@@ -410,37 +410,37 @@ header.on-light .head-phone{text-shadow:none}
 .calc-slider input[type=range]:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
 .calc-preset{display:flex;gap:8px;flex-wrap:wrap;margin-top:-8px;margin-bottom:20px}
 .calc-preset button{
-  background:none;border:1px solid rgba(244,243,239,.24);color:rgba(244,243,239,.7);cursor:pointer;
+  background:none;border:1px solid rgba(3,13,48,.2);color:#5a6076;cursor:pointer;
   font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;padding:7px 11px;transition:all .25s;
 }
-.calc-preset button:hover{border-color:var(--gold);color:var(--gold-hot)}
+.calc-preset button:hover{border-color:var(--gold);color:#9a7420}
 
 /* --- results --- */
 .calc-out{display:flex;flex-direction:column;gap:clamp(12px,1.5vw,18px)}
-.calc-hero{border:1px solid rgba(232,163,61,.4);background:linear-gradient(160deg,rgba(232,163,61,.13),rgba(232,163,61,.02));padding:clamp(20px,2.6vw,34px)}
-.calc-hero .calc-lbl{color:var(--gold-hot)}
+.calc-hero{border:1px solid rgba(232,163,61,.55);background:linear-gradient(160deg,rgba(232,163,61,.16),rgba(232,163,61,.04));padding:clamp(20px,2.6vw,34px)}
+.calc-hero .calc-lbl{color:#8a6a1e}
 .calc-big{
   font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;line-height:.88;
-  font-size:clamp(56px,8.5vw,112px);color:#fff;letter-spacing:.005em;
+  font-size:clamp(56px,8.5vw,112px);color:var(--ink);letter-spacing:.005em;
 }
-.calc-big small{font-size:.42em;color:var(--gold-hot);margin-left:.12em;font-style:italic}
-.calc-sub{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,243,239,.62);margin-top:12px}
+.calc-big small{font-size:.42em;color:#9a7420;margin-left:.12em;font-style:italic}
+.calc-sub{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:#6f7590;margin-top:12px}
 .calc-pair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,1.5vw,18px)}
-.calc-card{border:1px solid rgba(244,243,239,.16);background:rgba(244,243,239,.03);padding:clamp(16px,2vw,24px)}
-.calc-num{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;font-size:clamp(30px,4vw,50px);line-height:1;color:#fff}
-.calc-num small{font-size:.4em;color:var(--gold-hot);margin-left:.1em}
+.calc-card{border:1px solid rgba(3,13,48,.14);background:#fff;padding:clamp(16px,2vw,24px)}
+.calc-num{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;font-size:clamp(30px,4vw,50px);line-height:1;color:var(--ink)}
+.calc-num small{font-size:.4em;color:#9a7420;margin-left:.1em}
 
 /* before / after bar */
-.calc-bars{border:1px solid rgba(244,243,239,.16);background:rgba(244,243,239,.03);padding:clamp(16px,2vw,24px)}
+.calc-bars{border:1px solid rgba(3,13,48,.14);background:#fff;padding:clamp(16px,2vw,24px)}
 .bar-row{margin-top:12px}
 .bar-row:first-of-type{margin-top:14px}
-.bar-head{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,243,239,.62);margin-bottom:6px}
-.bar-track{height:12px;background:rgba(244,243,239,.09);position:relative;overflow:hidden}
+.bar-head{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#6f7590;margin-bottom:6px}
+.bar-track{height:12px;background:rgba(3,13,48,.09);position:relative;overflow:hidden}
 .bar-fill{position:absolute;left:0;top:0;bottom:0;transition:width .7s var(--ease-out)}
-.bar-fill.base{background:rgba(244,243,239,.32)}
+.bar-fill.base{background:rgba(3,13,48,.3)}
 .bar-fill.treated{background:linear-gradient(90deg,var(--gold),var(--gold-hot))}
-.calc-note{font-size:12px;color:rgba(244,243,239,.5);line-height:1.65;margin-top:4px}
-.calc-note b{color:rgba(244,243,239,.78);font-weight:600}
+.calc-note{font-size:12px;color:#5a6076;line-height:1.65;margin-top:4px}
+.calc-note b{color:var(--ink);font-weight:600}
 .calc-cta{margin-top:6px}
 
 @media (max-width:900px){
@@ -1036,7 +1036,8 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
           <div class="glint"></div>
         </div>
         <div class="door-copy">
-          <p>Every Fuel2Go truck carries the same four lines. Three of them are the paperwork. The fourth is for the drivers.</p>
+          <p>You would not leave your truck sitting out with the tank filthy. You would not run a door that dirty either.</p>
+          <p>So why put dirty fuel through it? Every Fuel2Go truck carries the same four lines. Three of them are paperwork. The fourth is for the drivers.</p>
           <p>Channel 40 is the highway channel. It is where the road actually talks to itself, and it is on our doors because we are on it too.</p>
           <div class="door-note">
             Monitoring CH 40
