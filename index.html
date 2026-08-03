@@ -127,52 +127,6 @@ header.on-light .head-phone{text-shadow:none}
 .pillar--ivory{background:var(--ivory);color:var(--ink)}
 
 
-/* ============ CASE STACK (sticky pile) ============
-   Markup: #work > .stack-track > .stack-slot > .stack-card.
-   JS driver scales cards as the track scrolls (style.transform),
-   so CSS owns layout and stickiness only, never transform. */
-#work{display:block;background:var(--ivory);padding:96px 0 120px}
-#work .wrap-c{padding:0 clamp(22px,6vw,90px)}
-#work .display{font-size:clamp(44px,5.4vw,88px);color:var(--ink);margin-bottom:clamp(28px,4vh,52px)}
-.stack-track{position:relative}
-.stack-slot{height:96vh;position:relative}
-.stack-card{
-  position:sticky;top:7vh;
-  max-width:1200px;margin:0 auto;
-  width:calc(100% - 2*clamp(22px,6vw,90px));
-  background:var(--ink);color:var(--ivory);
-  border:1px solid rgba(3,13,48,.2);
-  box-shadow:0 30px 80px rgba(3,13,48,.35);
-  padding:clamp(20px,2.6vw,36px);
-  transform-origin:top center;will-change:transform;
-}
-.stack-top{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:clamp(16px,2vh,26px)}
-.stack-id{display:flex;align-items:baseline;gap:18px}
-.stack-num{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:800;font-size:clamp(38px,4vw,60px);line-height:1;color:var(--gold)}
-.stack-meta{display:flex;flex-direction:column;gap:3px}
-.stack-cat{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-hot)}
-.stack-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:clamp(22px,2.4vw,34px);line-height:1}
-.stack-btn{
-  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--ivory);text-decoration:none;border:1px solid rgba(244,243,239,.4);
-  padding:12px 20px;white-space:nowrap;transition:background .25s ease,color .25s ease,border-color .25s ease;
-}
-.stack-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--ink)}
-.stack-grid{display:grid;grid-template-columns:1fr 1.35fr;gap:clamp(10px,1.2vw,18px)}
-.stack-col{display:grid;grid-template-rows:1fr 1fr;gap:clamp(10px,1.2vw,18px)}
-.stack-grid figure{position:relative;overflow:hidden;margin:0}
-.stack-grid img{width:100%;height:100%;object-fit:cover;display:block}
-.stack-col figure{aspect-ratio:16/9}
-.stack-tall{aspect-ratio:16/10}
-@media(max-width:820px){
-  .stack-slot{height:auto;margin-bottom:26px}
-  .stack-card{position:relative;top:0;width:calc(100% - 44px)}
-  .stack-grid{grid-template-columns:1fr}
-  .stack-col{grid-template-rows:none;grid-template-columns:1fr 1fr}
-  .stack-tall{aspect-ratio:16/9}
-  .stack-top{flex-wrap:wrap}
-}
-
 /* wavy vertical seam biting into the previous panel */
 .pillar::before{
   content:"";position:absolute;left:-24px;top:0;bottom:0;width:26px;
@@ -975,86 +929,6 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
     </div>
   </section>
 
-  <!-- ================== CASE STACK markup ================== -->
-  <section class="section" id="work">
-    <div class="wrap-c">
-      <div class="kick-c">Case studies</div>
-      <h2 class="display">Fuel where<br>the work is.</h2>
-    </div>
-
-    <div class="stack-track" id="stackTrack">
-
-      <div class="stack-slot">
-        <article class="stack-card" style="--i:0">
-          <div class="stack-top">
-            <div class="stack-id">
-              <span class="stack-num">01</span>
-              <div class="stack-meta">
-                <span class="stack-cat">Transport</span>
-                <span class="stack-name">Fleet refuelling</span>
-              </div>
-            </div>
-            <a class="stack-btn" href="#cta">View service</a>
-          </div>
-          <div class="stack-grid">
-            <div class="stack-col">
-              <figure><img src="assets/frames/f_0540.jpg" alt="Tanker running an outback highway at dusk" loading="lazy"></figure>
-              <figure><img src="assets/frames/f_0430.jpg" alt="Fuel trail behind a linehaul tanker" loading="lazy"></figure>
-            </div>
-            <!-- ind-mining.webp is the highway truck shot, the two ind- filenames are swapped -->
-            <figure class="stack-tall"><img src="assets/case-transport.jpg" alt="Fuel2Go tanker passing a linehaul truck at sunrise" loading="lazy"></figure>
-          </div>
-        </article>
-      </div>
-
-      <div class="stack-slot">
-        <article class="stack-card" style="--i:1">
-          <div class="stack-top">
-            <div class="stack-id">
-              <span class="stack-num">02</span>
-              <div class="stack-meta">
-                <span class="stack-cat">Mining</span>
-                <span class="stack-name">Remote site supply</span>
-              </div>
-            </div>
-            <a class="stack-btn" href="#cta">View service</a>
-          </div>
-          <div class="stack-grid">
-            <div class="stack-col">
-              <figure><img src="assets/frames/f_0230.jpg" alt="Fuel moving through a tanker barrel" loading="lazy"></figure>
-              <figure><img src="assets/frames/f_0140.jpg" alt="Fuel spreading across open ground" loading="lazy"></figure>
-            </div>
-            <!-- ind-transport.webp is the excavator shot, the two ind- filenames are swapped -->
-            <figure class="stack-tall"><img src="assets/ind-transport.webp" alt="Fuel2Go mining site supply" loading="lazy"></figure>
-          </div>
-        </article>
-      </div>
-
-      <div class="stack-slot">
-        <article class="stack-card" style="--i:2">
-          <div class="stack-top">
-            <div class="stack-id">
-              <span class="stack-num">03</span>
-              <div class="stack-meta">
-                <span class="stack-cat">Construction</span>
-                <span class="stack-name">On-site storage</span>
-              </div>
-            </div>
-            <a class="stack-btn" href="#cta">View service</a>
-          </div>
-          <div class="stack-grid">
-            <div class="stack-col">
-              <figure><img src="assets/frames/f_0330.jpg" alt="Pistons firing on clean diesel" loading="lazy"></figure>
-              <figure><img src="assets/frames/f_0060.jpg" alt="Diesel settling inside a storage tank" loading="lazy"></figure>
-            </div>
-            <figure class="stack-tall"><img src="assets/ind-construction.webp" alt="Fuel2Go construction site storage" loading="lazy"></figure>
-          </div>
-        </article>
-      </div>
-
-    </div>
-  </section>
-  <!-- ================ end CASE STACK markup ================ -->
 
 <section class="section" id="how">
   <div class="wrap-c">
@@ -1658,36 +1532,6 @@ var io = new IntersectionObserver(function(es){
   });
 }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
 document.querySelectorAll('.section').forEach(function(s){ io.observe(s); });
-
-/* ---------- case stack ---------- */
-(function(){
-  var track = document.getElementById('stackTrack');
-  if (!track) return;
-  var cards = track.querySelectorAll('.stack-card');
-  var total = cards.length;
-  var queued = false;
-
-  function clamp01(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
-
-  function update(){
-    queued = false;
-    var r = track.getBoundingClientRect();
-    var span = r.height - window.innerHeight;
-    var progress = span > 0 ? clamp01(-r.top / span) : 0;
-    for (var i = 0; i < total; i++){
-      var target = 1 - (total - 1 - i) * 0.03;
-      var start = i / total;
-      var p = clamp01((progress - start) / (1 - start));
-      cards[i].style.transform = 'scale(' + (1 + (target - 1) * p) + ')';
-    }
-  }
-
-  function onScroll(){ if (!queued){ queued = true; requestAnimationFrame(update); } }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
-  update();
-})();
 
 /* ---------- x-ray film: honour reduced motion ---------- */
 (function(){
