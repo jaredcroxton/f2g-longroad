@@ -258,114 +258,282 @@ header.on-light .head-phone{text-shadow:none}
 }
 /* ================= end INDUSTRIES accordion ============ */
 
-/* how it works */
-#how{background:#EAE8E1}
-#how .display{font-size:clamp(44px,5.4vw,84px);color:var(--ink);margin-bottom:54px}
-.steps-wrap{position:relative;padding-top:26px}
-.spine{position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-hot));transform:scaleX(0);transform-origin:left;transition:transform 1.2s var(--ease-out) .1s}
-.section.in .spine{transform:scaleX(1)}
-.spine::after{content:"";position:absolute;top:-3px;left:0;width:8px;height:8px;border-radius:50%;background:var(--gold-hot);box-shadow:0 0 14px var(--gold-hot);opacity:0}
-.section.in .spine::after{animation:fuelDot 5.5s linear 1.4s infinite}
-@keyframes fuelDot{0%{left:0;opacity:0}6%{opacity:1}94%{opacity:1}100%{left:calc(100% - 8px);opacity:0}}
-.steps-c{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,1.6vw,24px)}
-.step-c{position:relative;background:var(--ivory);padding:26px 24px 20px;display:flex;flex-direction:column;justify-content:space-between;min-height:250px;opacity:0;transform:translateY(30px);transition:opacity .8s var(--ease-out),transform .8s var(--ease-out),box-shadow .35s var(--ease-out)}
-.step-c::before{content:"";position:absolute;top:0;left:0;height:2px;width:0;background:var(--gold);transition:width .7s var(--ease-out)}
-.section.in .step-c{opacity:1;transform:none}
-.section.in .step-c::before{width:100%}
-.step-c:nth-child(1){transition-delay:.15s} .section.in .step-c:nth-child(1)::before{transition-delay:.25s}
-.step-c:nth-child(2){transition-delay:.3s}  .section.in .step-c:nth-child(2)::before{transition-delay:.4s}
-.step-c:nth-child(3){transition-delay:.45s} .section.in .step-c:nth-child(3)::before{transition-delay:.55s}
-.step-c:nth-child(4){transition-delay:.6s}  .section.in .step-c:nth-child(4)::before{transition-delay:.7s}
-.step-c:hover{transform:translateY(-5px);box-shadow:0 18px 40px rgba(10,16,53,.14)}
-.step-c p{font-size:13.5px;color:#3d4258}
-.step-c p a{color:#9a7420;text-decoration:underline}
-.step-c .num{overflow:hidden;margin-top:22px}
-.step-c .num span{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;font-size:58px;color:var(--ink);line-height:1;transform:translateY(115%);transition:transform .9s var(--ease-out)}
-.section.in .step-c:nth-child(1) .num span{transform:none;transition-delay:.35s}
-.section.in .step-c:nth-child(2) .num span{transform:none;transition-delay:.5s}
-.section.in .step-c:nth-child(3) .num span{transform:none;transition-delay:.65s}
-.section.in .step-c:nth-child(4) .num span{transform:none;transition-delay:.8s}
+/* ===================================================================
+   THE DELIVERY RUN  —  #how
+   Replaces the old .steps-wrap / .spine / .steps-c / .step-c rules.
+   Delete those four rule blocks (and the .spine dot keyframes) before
+   pasting this in. Everything below is namespaced run-*.
+   =================================================================== */
 
-/* ============ CASE STACK (sticky stacking cards) ============
-   Three parts: this CSS block, the #work markup, the script at the
-   bottom. Tune the vars on #work, nothing else.
-   ============================================================= */
-#work{
-  --img-a:clamp(120px,min(15vw,21vh),220px);  /* short tile, left column */
-  --img-b:clamp(150px,min(21vw,29vh),300px);  /* tall tile, left column */
-  --peek:26px;          /* vertical offset per card in the pile */
-  --radius:0px;         /* set 44px for the soft-cornered variant */
-  --park:104px;         /* where a card parks under the fixed header */
-  display:block;        /* .section is flex, sticky needs block flow */
-  min-height:0;
-  background:var(--ivory);
-  padding:96px clamp(22px,6vw,90px) 40px;
-}
-#work .wrap-c{margin-bottom:clamp(34px,4vw,58px)}
-#work .display{font-size:clamp(44px,5.4vw,84px);color:var(--ink)}
+#how .run-track{position:relative;margin-top:-6px}
 
-.stack-slot{height:85vh;position:sticky;top:var(--park)}
-.stack-card{
+/* ---------- the road ---------- */
+#how .run-road{
   position:relative;
-  top:calc(var(--i) * var(--peek));
-  background:var(--ink);
-  border:1px solid rgba(232,163,61,.34);
-  border-radius:var(--radius);
-  padding:clamp(20px,2.2vw,34px);
+  height:76px;
+  margin:0 0 32px;
+  overflow:hidden;
+}
+#how .run-asphalt{
+  position:absolute;left:0;right:0;top:50%;
+  height:10px;border-radius:5px;
+  transform:translateY(-50%);
+  background:linear-gradient(90deg,
+    rgba(3,13,48,0) 0%,
+    rgba(3,13,48,.88) 5%,
+    rgba(3,13,48,.88) 95%,
+    rgba(3,13,48,0) 100%);
+  z-index:1;
+}
+#how .run-fill{
+  position:absolute;left:0;top:50%;
+  width:100%;height:10px;border-radius:3px;
+  transform-origin:left center;
+  transform:translateY(-50%) scaleX(0);
+  background:linear-gradient(90deg,var(--gold),var(--gold-hot));
+  box-shadow:0 0 18px rgba(232,163,61,.35);
+  z-index:2;
   will-change:transform;
 }
-.stack-card::before{
-  content:"";position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--gold),transparent);
+#how .run-dash{
+  position:absolute;left:0;right:0;top:50%;
+  height:2px;transform:translateY(-50%);
+  background:repeating-linear-gradient(90deg,
+    var(--gold-hot) 0 16px, rgba(0,0,0,0) 16px 34px);
+  opacity:.5;z-index:3;
+  -webkit-mask-image:linear-gradient(90deg,rgba(0,0,0,0),#000 7%,#000 93%,rgba(0,0,0,0));
+  mask-image:linear-gradient(90deg,rgba(0,0,0,0),#000 7%,#000 93%,rgba(0,0,0,0));
+}
+#how .run-node{
+  position:absolute;top:50%;left:50%;
+  width:15px;height:15px;border-radius:50%;
+  background:#EAE8E1;border:2px solid rgba(3,13,48,.55);
+  transform:translate(-50%,-50%);
+  z-index:4;
+  transition:background-color .4s var(--ease-out),
+             border-color .4s var(--ease-out),
+             box-shadow .4s var(--ease-out),
+             transform .4s var(--ease-out);
+}
+#how .run-node.is-done{
+  background:var(--gold-hot);
+  border-color:var(--ink);
+  box-shadow:0 0 0 5px rgba(232,163,61,.22);
+  transform:translate(-50%,-50%) scale(1.14);
 }
 
-.stack-top{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:clamp(16px,1.8vw,26px)}
-.stack-id{display:flex;align-items:center;gap:clamp(16px,2vw,30px)}
-.stack-num{
-  font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;
-  font-size:clamp(56px,7vw,112px);line-height:.86;color:#fff;
+/* ---------- the truck ---------- */
+#how .run-truck{
+  position:absolute;left:0;top:50%;
+  width:132px;height:50px;
+  transform:translate3d(-200px,-50%,0);
+  z-index:5;
+  will-change:transform;
+  pointer-events:none;
 }
-.stack-meta{display:flex;flex-direction:column;gap:4px}
-.stack-cat{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-hot)}
-.stack-name{
-  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-style:italic;
-  text-transform:uppercase;font-size:clamp(24px,2.4vw,38px);line-height:1;letter-spacing:.01em;color:#fff;
+#how .run-truck svg{display:block;width:100%;height:100%;overflow:visible}
+#how .run-wheel{
+  transform:rotate(var(--run-spin,0deg));
+  transform-box:fill-box;
+  transform-origin:center;
 }
-.stack-btn{
-  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-style:italic;
-  text-transform:uppercase;letter-spacing:.1em;font-size:15px;
-  padding:11px 26px;border:1px solid rgba(244,243,239,.55);color:var(--ivory);
-  white-space:nowrap;transition:background .3s,color .3s,border-color .3s;
+#how .run-dust{
+  position:absolute;top:50%;right:calc(100% - 26px);
+  width:98px;height:16px;border-radius:50%;
+  transform:translateY(-50%) skewX(-16deg);
+  background:linear-gradient(90deg,
+    rgba(3,13,48,0) 0%,
+    rgba(3,13,48,.10) 45%,
+    rgba(232,163,61,.30) 100%);
+  opacity:var(--run-dust,0);
+  transition:opacity .12s linear;
+  pointer-events:none;
 }
-.stack-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+#how .run-dust::after{
+  content:'';position:absolute;left:6px;right:18px;top:50%;height:1px;
+  transform:translateY(-50%);
+  background:linear-gradient(90deg,rgba(0,0,0,0),var(--gold));
+  opacity:.55;
+}
 
-.stack-grid{
-  display:grid;grid-template-columns:40fr 60fr;
-  gap:clamp(10px,1.2vw,16px);
-  height:calc(var(--img-a) + var(--img-b) + clamp(10px,1.2vw,16px));
+/* ---------- the cards ---------- */
+#how .run-steps{
+  list-style:none;margin:0;padding:0;
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px;
+  align-items:stretch;
 }
-.stack-col{display:flex;flex-direction:column;gap:clamp(10px,1.2vw,16px)}
-.stack-grid figure{position:relative;overflow:hidden;background:#050818}
-.stack-grid img{width:100%;height:100%;object-fit:cover;opacity:.9;transition:transform .7s var(--ease-out),opacity .5s}
-.stack-card:hover .stack-grid img{opacity:1}
-.stack-grid figure:hover img{transform:scale(1.05)}
-.stack-col figure:first-child{height:var(--img-a)}
-.stack-col figure:last-child{height:var(--img-b)}
+#how .run-card{
+  --c-bg:#FBFAF7;
+  --c-fg:rgba(3,13,48,.70);
+  --c-num:rgba(3,13,48,.26);
+  --c-line:rgba(3,13,48,.14);
+  --c-day:rgba(3,13,48,.55);
+  --c-tick:rgba(3,13,48,.30);
+  --c-stub:rgba(3,13,48,.20);
+  position:relative;
+  display:flex;flex-direction:column;
+  min-height:222px;
+  padding:26px 24px 24px;
+  border-radius:4px;
+  background:var(--c-bg);
+  color:var(--c-fg);
+  border:1px solid var(--c-line);
+  box-shadow:0 1px 0 rgba(3,13,48,.05);
+  transition:background-color .45s var(--ease-out),
+             color .45s var(--ease-out),
+             border-color .45s var(--ease-out),
+             box-shadow .45s var(--ease-out),
+             transform .5s var(--ease-out);
+}
+#how .run-card::before{
+  content:'';position:absolute;left:50%;top:-65px;
+  width:1px;height:65px;
+  transform:translateX(-50%);
+  background:linear-gradient(180deg,var(--c-stub),rgba(3,13,48,0));
+  transition:background .45s var(--ease-out);
+}
+#how .run-card.is-done{
+  --c-bg:var(--ink);
+  --c-fg:rgba(244,243,239,.80);
+  --c-num:var(--gold);
+  --c-line:rgba(232,163,61,.30);
+  --c-day:var(--gold-hot);
+  --c-tick:var(--gold-hot);
+  --c-stub:rgba(232,163,61,.75);
+  transform:translateY(-5px);
+  box-shadow:0 22px 44px -24px rgba(3,13,48,.60);
+}
+#how .run-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+#how .run-num{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:800;font-style:italic;
+  font-size:52px;line-height:.78;letter-spacing:-.01em;
+  color:var(--c-num);
+  transition:color .45s var(--ease-out);
+}
+#how .run-day{
+  font-family:'IBM Plex Mono',monospace;
+  font-weight:500;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  white-space:nowrap;
+  padding:6px 9px;border:1px solid var(--c-line);border-radius:2px;
+  color:var(--c-day);
+  transition:color .45s var(--ease-out),border-color .45s var(--ease-out);
+}
+#how .run-rule{
+  height:1px;margin:18px 0 16px;background:var(--c-line);
+  transition:background .45s var(--ease-out);
+}
+#how .run-copy{
+  font-family:'Archivo',sans-serif;
+  font-size:15px;line-height:1.62;margin:0;
+}
+#how .run-foot{
+  margin-top:auto;padding-top:22px;
+  display:flex;align-items:center;gap:9px;
+}
+#how .run-tick{width:17px;height:17px;flex:none}
+#how .run-tick path{
+  fill:none;stroke:var(--c-tick);stroke-width:2.2;
+  stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:20;stroke-dashoffset:20;
+  transition:stroke-dashoffset .55s var(--ease-out) .08s,stroke .45s var(--ease-out);
+}
+#how .run-card.is-done .run-tick path{stroke-dashoffset:0}
+#how .run-status{display:grid}
+#how .run-st{
+  grid-area:1/1;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  transition:opacity .35s var(--ease-out);
+}
+#how .run-st-a{color:rgba(3,13,48,.40);opacity:1}
+#how .run-st-b{color:var(--gold-hot);opacity:0}
+#how .run-card.is-done .run-st-a{opacity:0}
+#how .run-card.is-done .run-st-b{opacity:1}
 
+/* ---------- tablet ---------- */
+@media (max-width:1180px){
+  #how .run-num{font-size:44px}
+  #how .run-card{padding:22px 20px 20px;min-height:210px}
+  #how .run-steps{gap:16px}
+}
+
+/* ---------- mobile: the road stands up ---------- */
 @media (max-width:900px){
-  #work{--park:84px;padding-top:70px}
-  .stack-slot{height:92vh;height:92svh}
-  .stack-grid{grid-template-columns:1fr;height:auto}
-  .stack-col{flex-direction:row}
-  .stack-col figure{flex:1}
-  .stack-col figure:first-child,.stack-col figure:last-child{height:150px}
-  .stack-tall{height:220px}
-  .stack-btn{padding:9px 18px;font-size:13px}
+  #how .run-road{
+    position:absolute;left:0;top:0;bottom:0;
+    width:48px;height:auto;margin:0;
+  }
+  #how .run-asphalt{
+    left:50%;right:auto;top:0;bottom:0;
+    width:10px;height:auto;
+    transform:translateX(-50%);
+    background:linear-gradient(180deg,
+      rgba(3,13,48,0) 0%,
+      rgba(3,13,48,.88) 4%,
+      rgba(3,13,48,.88) 96%,
+      rgba(3,13,48,0) 100%);
+  }
+  #how .run-fill{
+    left:50%;top:0;
+    width:10px;height:100%;
+    transform-origin:center top;
+    transform:translateX(-50%) scaleY(0);
+  }
+  #how .run-dash{
+    left:50%;right:auto;top:0;bottom:0;
+    width:2px;height:auto;
+    transform:translateX(-50%);
+    background:repeating-linear-gradient(180deg,
+      var(--gold-hot) 0 14px, rgba(0,0,0,0) 14px 30px);
+    -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,0),#000 5%,#000 95%,rgba(0,0,0,0));
+    mask-image:linear-gradient(180deg,rgba(0,0,0,0),#000 5%,#000 95%,rgba(0,0,0,0));
+  }
+  #how .run-truck{
+    left:50%;top:0;
+    width:104px;height:39px;
+    transform:translate3d(-52px,-140px,0) rotate(90deg);
+  }
+  #how .run-dust{width:74px;right:calc(100% - 20px)}
+  #how .run-steps{grid-template-columns:1fr;gap:14px;padding-left:74px}
+  #how .run-card{min-height:0;padding:20px 20px 20px}
+  #how .run-card::before{
+    left:-26px;top:50%;
+    width:26px;height:1px;
+    transform:translateY(-50%);
+    background:linear-gradient(90deg,var(--c-stub),rgba(3,13,48,0));
+  }
+  #how .run-card.is-done{transform:translateX(3px)}
+  #how .run-num{font-size:42px}
+  #how .run-foot{padding-top:16px}
 }
+
+@media (max-width:560px){
+  #how .run-road{width:40px}
+  #how .run-truck{width:88px;height:33px;transform:translate3d(-44px,-140px,0) rotate(90deg)}
+  #how .run-steps{padding-left:60px;gap:12px}
+  #how .run-card{padding:18px 16px}
+  #how .run-num{font-size:38px}
+  #how .run-day{font-size:9px;padding:5px 7px;letter-spacing:.16em}
+  #how .run-copy{font-size:14.5px}
+  #how .run-card::before{left:-20px;width:20px}
+}
+
+/* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion:reduce){
-  .stack-card{transform:none!important}
+  #how .run-truck{display:none}
+  #how .run-card,
+  #how .run-card::before,
+  #how .run-num,
+  #how .run-day,
+  #how .run-rule,
+  #how .run-node,
+  #how .run-st,
+  #how .run-tick path{transition:none}
+  #how .run-card.is-done{transform:none}
 }
-/* ===================== end CASE STACK ====================== */
 
 /* ============ SAVINGS CALCULATOR ============ */
 #calc{background:var(--ink);color:var(--ivory);padding:clamp(64px,9vh,120px) clamp(20px,6vw,90px)}
@@ -575,18 +743,10 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
 
 @media (max-width:920px){
   .head-phone{display:none}
-  .steps-c{grid-template-columns:1fr 1fr}
-  .step-c{min-height:180px}
   .beat--finale{bottom:10vh}
   #film-scroll{height:780vh}
 }
 @media (max-width:560px){
-  .steps-c{grid-template-columns:1fr;gap:12px}
-  /* compact rows: numeral beside copy, no dead air */
-  .step-c{flex-direction:row;align-items:center;justify-content:flex-start;gap:18px;min-height:0;padding:18px 18px}
-  .step-c .num{margin-top:0;flex:none;order:-1;width:64px}
-  .step-c .num span{font-size:44px}
-  .step-c p{font-size:14px}
   .beat h2{font-size:clamp(38px,11vw,54px)}
   .beat::before{inset:-40% -20% -40% -12%;background:radial-gradient(80% 70% at 35% 50%,rgba(4,6,18,.78),rgba(4,6,18,.45) 55%,transparent 82%)}
   .beat p{font-size:14px}
@@ -597,10 +757,6 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
   #scrollcue::after{animation:none}
   .section .wrap-c > *,.section .stag > *{opacity:1;transform:none;transition:none}
   .btn-gold::after{display:none}
-  .step-c,.step-c .num span{opacity:1;transform:none;transition:none}
-  .spine{transform:scaleX(1);transition:none}
-  .section.in .spine::after{animation:none;opacity:0}
-  .step-c::before{width:100%;transition:none}
   .cta-line > span{transform:none;transition:none}
   #cta .btn-gold{animation:none}
   #cta .marq .track{animation:none}
@@ -853,25 +1009,145 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
   </section>
   <!-- ================ end CASE STACK markup ================ -->
 
-  <section class="section" id="how">
-    <div class="wrap-c">
-      <div class="kick-c">How it works</div>
-      <h2 class="display">Getting started<br>is simple.</h2>
-      <div class="steps-wrap">
-        <div class="spine"></div>
-        <div class="steps-c">
-          <div class="step-c"><p>Send us your enquiry with your fleet volume and what you need on site.</p><div class="num"><span>01</span></div></div>
-          <div class="step-c"><p>A team member will be in touch to discuss your requirements.</p><div class="num"><span>02</span></div></div>
-          <div class="step-c"><p>We set up your account and complete the onboarding process.</p><div class="num"><span>03</span></div></div>
-          <div class="step-c"><p>Tanks can be delivered on site within 14 days of account approval.</p><div class="num"><span>04</span></div></div>
+<section class="section" id="how">
+  <div class="wrap-c">
+    <div class="kick-c">How it works</div>
+    <h2 class="display">Getting started<br>is simple.</h2>
+
+    <div class="run-track">
+
+      <div class="run-road" aria-hidden="true">
+        <div class="run-asphalt"></div>
+        <div class="run-fill"></div>
+        <div class="run-dash"></div>
+
+        <span class="run-node"></span>
+        <span class="run-node"></span>
+        <span class="run-node"></span>
+        <span class="run-node"></span>
+
+        <div class="run-truck">
+          <div class="run-dust"></div>
+          <svg viewBox="0 0 132 50" xmlns="http://www.w3.org/2000/svg" focusable="false">
+            <ellipse cx="68" cy="46.4" rx="60" ry="3.2" fill="#030D30" opacity=".16"/>
+
+            <!-- trailer -->
+            <rect x="10" y="29.6" width="3.4" height="8.6" rx="1.2" fill="#050818"/>
+            <rect x="12" y="34.8" width="84" height="3.6" fill="#050818"/>
+            <rect x="48" y="8.6" width="12" height="5.4" rx="2" fill="#050818"/>
+            <rect x="12" y="13" width="82" height="22" rx="11" fill="#050818"/>
+            <rect x="17" y="16.4" width="72" height="3.6" rx="1.8" fill="#E8A33D" opacity=".20"/>
+            <path d="M38 13.8V34.2" stroke="#E8A33D" stroke-opacity=".32" stroke-width="1.2"/>
+            <path d="M62 13.8V34.2" stroke="#E8A33D" stroke-opacity=".32" stroke-width="1.2"/>
+            <rect x="12" y="13" width="82" height="22" rx="11" fill="none" stroke="#E8A33D" stroke-opacity=".38"/>
+
+            <!-- coupling -->
+            <rect x="93" y="31.4" width="7" height="5.6" fill="#050818"/>
+            <rect x="94.4" y="6" width="2.8" height="21" rx="1.4" fill="#050818"/>
+
+            <!-- prime mover -->
+            <path d="M96 38V12q0-2.5 2.5-2.5H117q2.5 0 3.6 2.1l4.4 8.8 2.5 1q2.5 1.2 2.5 3.8V36q0 2-2 2Z" fill="#050818"/>
+            <rect x="102.6" y="12.6" width="7.6" height="7.6" rx="1.2" fill="#E8A33D" opacity=".28"/>
+            <path d="M112.6 12.6h5.1q1.1 0 1.6 1l3.2 6.6h-9.9Z" fill="#E8A33D" opacity=".55"/>
+            <rect x="125.6" y="28.2" width="5" height="6.2" rx="1.2" fill="#E8A33D" opacity=".32"/>
+            <circle cx="128.2" cy="25" r="1.7" fill="#F5C15E"/>
+
+            <!-- wheels -->
+            <circle cx="24" cy="38" r="6.4" fill="#050818" stroke="#E8A33D" stroke-opacity=".35"/>
+            <circle cx="39" cy="38" r="6.4" fill="#050818" stroke="#E8A33D" stroke-opacity=".35"/>
+            <circle cx="102" cy="38" r="6.4" fill="#050818" stroke="#E8A33D" stroke-opacity=".35"/>
+            <circle cx="121" cy="38" r="6.4" fill="#050818" stroke="#E8A33D" stroke-opacity=".35"/>
+
+            <g class="run-wheel" stroke="#E8A33D" stroke-opacity=".6" stroke-width="1" fill="none">
+              <circle cx="24" cy="38" r="3"/><path d="M21 38h6M24 35v6"/>
+            </g>
+            <g class="run-wheel" stroke="#E8A33D" stroke-opacity=".6" stroke-width="1" fill="none">
+              <circle cx="39" cy="38" r="3"/><path d="M36 38h6M39 35v6"/>
+            </g>
+            <g class="run-wheel" stroke="#E8A33D" stroke-opacity=".6" stroke-width="1" fill="none">
+              <circle cx="102" cy="38" r="3"/><path d="M99 38h6M102 35v6"/>
+            </g>
+            <g class="run-wheel" stroke="#E8A33D" stroke-opacity=".6" stroke-width="1" fill="none">
+              <circle cx="121" cy="38" r="3"/><path d="M118 38h6M121 35v6"/>
+            </g>
+          </svg>
         </div>
       </div>
-      <div class="how-cta">
-        <a class="btn-gold" href="#" data-drawer>Send an enquiry</a>
-        <a class="btn-ink" href="#apply">Open an account</a>
-      </div>
+
+      <ol class="run-steps">
+        <li class="run-card">
+          <div class="run-head">
+            <span class="run-num">01</span>
+            <span class="run-day">Day 0</span>
+          </div>
+          <div class="run-rule"></div>
+          <p class="run-copy">Send us your enquiry with your fleet volume and what you need on site.</p>
+          <div class="run-foot">
+            <svg class="run-tick" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 10.6L8.4 15L16 5.6"/></svg>
+            <span class="run-status">
+              <span class="run-st run-st-a">Pending</span>
+              <span class="run-st run-st-b">Complete</span>
+            </span>
+          </div>
+        </li>
+
+        <li class="run-card">
+          <div class="run-head">
+            <span class="run-num">02</span>
+            <span class="run-day">Day 1-2</span>
+          </div>
+          <div class="run-rule"></div>
+          <p class="run-copy">A team member will be in touch to discuss your requirements.</p>
+          <div class="run-foot">
+            <svg class="run-tick" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 10.6L8.4 15L16 5.6"/></svg>
+            <span class="run-status">
+              <span class="run-st run-st-a">Pending</span>
+              <span class="run-st run-st-b">Complete</span>
+            </span>
+          </div>
+        </li>
+
+        <li class="run-card">
+          <div class="run-head">
+            <span class="run-num">03</span>
+            <span class="run-day">Day 3</span>
+          </div>
+          <div class="run-rule"></div>
+          <p class="run-copy">We set up your account and complete the onboarding process.</p>
+          <div class="run-foot">
+            <svg class="run-tick" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 10.6L8.4 15L16 5.6"/></svg>
+            <span class="run-status">
+              <span class="run-st run-st-a">Pending</span>
+              <span class="run-st run-st-b">Complete</span>
+            </span>
+          </div>
+        </li>
+
+        <li class="run-card">
+          <div class="run-head">
+            <span class="run-num">04</span>
+            <span class="run-day">Within 14 days</span>
+          </div>
+          <div class="run-rule"></div>
+          <p class="run-copy">Tanks can be delivered on site within 14 days of account approval.</p>
+          <div class="run-foot">
+            <svg class="run-tick" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 10.6L8.4 15L16 5.6"/></svg>
+            <span class="run-status">
+              <span class="run-st run-st-a">Pending</span>
+              <span class="run-st run-st-b">Complete</span>
+            </span>
+          </div>
+        </li>
+      </ol>
+
     </div>
-  </section>
+
+    <div class="how-cta">
+      <a class="btn-gold" href="#" data-drawer>Send an enquiry</a>
+      <a class="btn-ink" href="#apply">Open an account</a>
+    </div>
+  </div>
+</section>
 
   <!-- ================== SAVINGS CALCULATOR ================== -->
   <section class="section" id="calc">
@@ -1555,6 +1831,193 @@ document.querySelectorAll('.section').forEach(function(s){ io.observe(s); });
     setTimeout(function(){ copy.textContent = 'Copy details'; }, 1800);
   });
 })();
+
+/* THE DELIVERY RUN — scroll-driven tanker on the #how road */
+(function () {
+  var sec = document.getElementById('how');
+  if (!sec) { return; }
+
+  var track = sec.querySelector('.run-track');
+  var road  = sec.querySelector('.run-road');
+  var truck = sec.querySelector('.run-truck');
+  var fill  = sec.querySelector('.run-fill');
+  if (!track || !road || !truck || !fill) { return; }
+
+  var cards = sec.querySelectorAll('.run-card');
+  var nodes = road.querySelectorAll('.run-node');
+  var n = Math.min(cards.length, nodes.length);
+  if (!n) { return; }
+
+  var vertical = false;
+  var roadLen = 1, tw = 132, th = 50;
+  var pts = [];
+  var state = [];
+  var lastP = 0, dust = 0;
+  var ticking = false, ready = false;
+
+  var i;
+  for (i = 0; i < n; i++) { state.push(false); }
+
+  var raf = window.requestAnimationFrame
+    ? function (cb) { return window.requestAnimationFrame(cb); }
+    : function (cb) { return window.setTimeout(cb, 16); };
+
+  function isVertical() {
+    if (window.matchMedia) { return window.matchMedia('(max-width: 900px)').matches; }
+    return (window.innerWidth || 1200) <= 900;
+  }
+
+  function reduced() {
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+
+  function measure() {
+    vertical = isVertical();
+    roadLen = (vertical ? road.offsetHeight : road.offsetWidth) || 1;
+    tw = truck.offsetWidth || 132;
+    th = truck.offsetHeight || 50;
+
+    pts.length = 0;
+    var k, c, v, node;
+    for (k = 0; k < n; k++) {
+      c = cards[k];
+      node = nodes[k];
+      if (vertical) {
+        v = c.offsetTop + c.offsetHeight / 2;
+        node.style.left = '';
+        node.style.top = v + 'px';
+      } else {
+        v = c.offsetLeft + c.offsetWidth / 2;
+        node.style.top = '';
+        node.style.left = v + 'px';
+      }
+      pts.push(v);
+    }
+    ready = true;
+  }
+
+  function setDone(flag) {
+    var k;
+    for (k = 0; k < n; k++) {
+      if (state[k] !== flag) {
+        state[k] = flag;
+        if (flag) {
+          cards[k].className += ' is-done';
+          nodes[k].className += ' is-done';
+        }
+      }
+    }
+  }
+
+  function completeAll() {
+    measure();
+    setDone(true);
+    fill.style.transform = vertical
+      ? 'translateX(-50%) scaleY(1)'
+      : 'translateY(-50%) scaleX(1)';
+  }
+
+  if (reduced()) {
+    if (document.readyState === 'complete') { completeAll(); }
+    else { window.addEventListener('load', completeAll, false); }
+    completeAll();
+    window.addEventListener('resize', completeAll, false);
+    return;
+  }
+
+  function frame() {
+    ticking = false;
+    if (!ready) { measure(); }
+
+    /* Key the run to the ROAD, not the whole section. The section starts ~380px
+       above the track behind the kicker and heading, so measuring from #how made
+       step 1 complete while the road was still below the fold. */
+    var r = track.getBoundingClientRect();
+    var vh = window.innerHeight || document.documentElement.clientHeight || 800;
+    var a = vh * 0.86;   /* run starts once the road is 86% down the viewport */
+    var b = vh * 0.30;   /* and finishes as it clears the upper third */
+    var span = r.height + a - b;
+    if (span < 1) { span = 1; }
+
+    var p = (a - r.top) / span;
+    if (p < 0) { p = 0; }
+    if (p > 1) { p = 1; }
+
+    var travel = roadLen + tw * 0.9;
+    var pos = (-tw * 0.75) + p * travel;
+    var nose = pos + tw;
+
+    if (vertical) {
+      truck.style.transform = 'translate3d(' + (-tw / 2).toFixed(1) + 'px,' +
+        (pos + tw / 2 - th / 2).toFixed(1) + 'px,0) rotate(90deg)';
+    } else {
+      truck.style.transform = 'translate3d(' + pos.toFixed(1) + 'px,-50%,0)';
+    }
+
+    var s = nose / roadLen;
+    if (s < 0) { s = 0; }
+    if (s > 1) { s = 1; }
+    fill.style.transform = vertical
+      ? 'translateX(-50%) scaleY(' + s.toFixed(4) + ')'
+      : 'translateY(-50%) scaleX(' + s.toFixed(4) + ')';
+
+    truck.style.setProperty('--run-spin', (pos * 3.4).toFixed(1) + 'deg');
+
+    var d = Math.abs(p - lastP) * 30;
+    if (d > 1) { d = 1; }
+    dust = dust * 0.82;
+    if (d > dust) { dust = d; }
+    truck.style.setProperty('--run-dust', (dust * 0.9).toFixed(3));
+    lastP = p;
+
+    var k, hit;
+    for (k = 0; k < n; k++) {
+      hit = nose >= pts[k];
+      if (hit !== state[k]) {
+        state[k] = hit;
+        if (hit) {
+          cards[k].classList.add('is-done');
+          nodes[k].classList.add('is-done');
+        } else {
+          cards[k].classList.remove('is-done');
+          nodes[k].classList.remove('is-done');
+        }
+      }
+    }
+
+    if (dust > 0.02) { schedule(); }
+  }
+
+  function schedule() {
+    if (!ticking) {
+      ticking = true;
+      raf(frame);
+    }
+  }
+
+  function remeasure() {
+    measure();
+    schedule();
+  }
+
+  measure();
+  schedule();
+
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', remeasure, false);
+  window.addEventListener('orientationchange', remeasure, false);
+  window.addEventListener('load', remeasure, false);
+
+  if (document.fonts && document.fonts.ready && document.fonts.ready.then) {
+    document.fonts.ready.then(remeasure)['catch'](function () {});
+  }
+
+  if (typeof ResizeObserver === 'function') {
+    try {
+      new ResizeObserver(remeasure).observe(sec);
+    } catch (e) {}
+  }
+}());
 
 /* ---------- industries accordion ---------- */
 (function(){
