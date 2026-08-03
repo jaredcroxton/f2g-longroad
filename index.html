@@ -1349,9 +1349,10 @@ var bitmaps = new Map(), decoding = new Set();
 /* memory budget: phones keep a much smaller decoded window than desktop */
 var SMALL = Math.min(screen.width, screen.height) <= 900;
 var FPS = 24;
-var B_AHEAD = SMALL ? 22 : Math.round(FPS * 2);
-var B_KEEP  = SMALL ? 26 : Math.round(FPS * 2.2);
-var MAX_DECODING = 8;              /* cap parallel decodes so fast scrubs can't queue hundreds */
+var B_AHEAD = SMALL ? 12 : Math.round(FPS * 2);
+var B_KEEP  = SMALL ? 14 : Math.round(FPS * 2.2);
+/* phones: ±14 kept bitmaps ≈ 100MB RGBA ceiling; iOS kills the tab near 200MB */
+var MAX_DECODING = SMALL ? 4 : 8;  /* cap parallel decodes so fast scrubs can't queue hundreds */
 var bmpCenter = -999;
 var displayed = -1;
 function ensureBitmaps(center){
@@ -1492,6 +1493,11 @@ var lastT = 0, worst = 0, lastLog = 0;
 /* ---------- main tick ---------- */
 function tick(now){
   computeProgress();
+  /* clamp long sweeps: a flick from one end to the other must not force
+     decode passes over every intermediate frame (iOS memory churn) */
+  var gap = target - current;
+  if (gap > 60) current = target - 60;
+  else if (gap < -60) current = target + 60;
   current += (target - current) * 0.14;
   var idx = Math.max(0, Math.min(FRAME_COUNT - 1, Math.round(current)));
   ensureBitmaps(idx);
