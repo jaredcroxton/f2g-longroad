@@ -126,6 +126,53 @@ header.on-light .head-phone{text-shadow:none}
 .pillar--gold{background:var(--gold);color:var(--ink)}
 .pillar--ivory{background:var(--ivory);color:var(--ink)}
 
+
+/* ============ CASE STACK (sticky pile) ============
+   Markup: #work > .stack-track > .stack-slot > .stack-card.
+   JS driver scales cards as the track scrolls (style.transform),
+   so CSS owns layout and stickiness only, never transform. */
+#work{display:block;background:var(--ivory);padding:96px 0 120px}
+#work .wrap-c{padding:0 clamp(22px,6vw,90px)}
+#work .display{font-size:clamp(44px,5.4vw,88px);color:var(--ink);margin-bottom:clamp(28px,4vh,52px)}
+.stack-track{position:relative}
+.stack-slot{height:96vh;position:relative}
+.stack-card{
+  position:sticky;top:7vh;
+  max-width:1200px;margin:0 auto;
+  width:calc(100% - 2*clamp(22px,6vw,90px));
+  background:var(--ink);color:var(--ivory);
+  border:1px solid rgba(3,13,48,.2);
+  box-shadow:0 30px 80px rgba(3,13,48,.35);
+  padding:clamp(20px,2.6vw,36px);
+  transform-origin:top center;will-change:transform;
+}
+.stack-top{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:clamp(16px,2vh,26px)}
+.stack-id{display:flex;align-items:baseline;gap:18px}
+.stack-num{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:800;font-size:clamp(38px,4vw,60px);line-height:1;color:var(--gold)}
+.stack-meta{display:flex;flex-direction:column;gap:3px}
+.stack-cat{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-hot)}
+.stack-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:700;text-transform:uppercase;font-size:clamp(22px,2.4vw,34px);line-height:1}
+.stack-btn{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ivory);text-decoration:none;border:1px solid rgba(244,243,239,.4);
+  padding:12px 20px;white-space:nowrap;transition:background .25s ease,color .25s ease,border-color .25s ease;
+}
+.stack-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.stack-grid{display:grid;grid-template-columns:1fr 1.35fr;gap:clamp(10px,1.2vw,18px)}
+.stack-col{display:grid;grid-template-rows:1fr 1fr;gap:clamp(10px,1.2vw,18px)}
+.stack-grid figure{position:relative;overflow:hidden;margin:0}
+.stack-grid img{width:100%;height:100%;object-fit:cover;display:block}
+.stack-col figure{aspect-ratio:16/9}
+.stack-tall{aspect-ratio:16/10}
+@media(max-width:820px){
+  .stack-slot{height:auto;margin-bottom:26px}
+  .stack-card{position:relative;top:0;width:calc(100% - 44px)}
+  .stack-grid{grid-template-columns:1fr}
+  .stack-col{grid-template-rows:none;grid-template-columns:1fr 1fr}
+  .stack-tall{aspect-ratio:16/9}
+  .stack-top{flex-wrap:wrap}
+}
+
 /* wavy vertical seam biting into the previous panel */
 .pillar::before{
   content:"";position:absolute;left:-24px;top:0;bottom:0;width:26px;
@@ -912,7 +959,7 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
       <div class="ind-acc" id="indAcc">
         <!-- the two ind- filenames are swapped on disk: ind-mining.webp is the truck, ind-transport.webp is the excavator -->
         <div class="ind-panel on">
-          <img src="assets/ind-mining.webp" alt="Transport">
+          <img src="assets/case-transport.jpg" alt="Transport">
           <div class="ind-copy2"><div class="tag">Transport</div><div class="rule"></div><div class="sub">Linehaul and fleet</div><div class="desc">Linehaul fleets running additive-treated diesel, delivered on your schedule.</div></div>
         </div>
         <div class="ind-panel">
@@ -955,7 +1002,7 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
               <figure><img src="assets/frames/f_0430.jpg" alt="Fuel trail behind a linehaul tanker" loading="lazy"></figure>
             </div>
             <!-- ind-mining.webp is the highway truck shot, the two ind- filenames are swapped -->
-            <figure class="stack-tall"><img src="assets/ind-mining.webp" alt="Fuel2Go transport fleet" loading="lazy"></figure>
+            <figure class="stack-tall"><img src="assets/case-transport.jpg" alt="Fuel2Go tanker passing a linehaul truck at sunrise" loading="lazy"></figure>
           </div>
         </article>
       </div>
