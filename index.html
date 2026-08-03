@@ -1407,10 +1407,17 @@ function drawFrame(idx, force){
   var sCover = Math.max(cw / w, ch / h);
   var s, dx, dy;
   if (portrait){
-    /* phones: always fill the screen; slide the crop toward the truck in ch4-5 */
+    /* phones: always fill the screen; per-chapter focus keeps the subject in the crop.
+       Yard (ch1): container tank and wordmark sit right of centre, bias hard right,
+       then ease back to centre through the line and hold centre for dash and pass. */
     s = sCover;
     var dw0 = w * s, dh0 = h * s;
-    var fx = progress >= 0.55 ? 0.62 : 0.5;
+    var fx;
+    if (progress < 0.22) fx = 0.71;
+    else if (progress < 0.28) fx = 0.71 + (0.60 - 0.71) * (progress - 0.22) / 0.06;
+    else if (progress < 0.47) fx = 0.60;
+    else if (progress < 0.53) fx = 0.60 + (0.50 - 0.60) * (progress - 0.47) / 0.06;
+    else fx = 0.5;
     dx = Math.min(0, Math.max(cw - dw0, -(dw0 - cw) * fx));
     dy = (ch - dh0) / 2;
   } else {
