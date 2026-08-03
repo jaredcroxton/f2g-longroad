@@ -64,7 +64,7 @@ header.on-light .head-phone{text-shadow:none}
 
 /* ============ FILM ============ */
 #film-scroll{position:relative;height:880vh}
-#stage{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--film-deep) url('assets/frames/f_0001.jpg?v=6') center/cover no-repeat}
+#stage{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--film-deep) url('assets/film2/f_0001.jpg?v=7') center/cover no-repeat}
 #film{position:absolute;inset:0;width:100%;height:100%}
 #grain{position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:overlay}
 #vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 90% at 50% 45%,transparent 55%,rgba(3,5,16,.52) 100%)}
@@ -795,27 +795,27 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
     </div>
 
     <div class="beat beat--left" data-in="0.14" data-peak="0.205" data-out="0.27">
-      <div class="kick">Fuel2Go Diesel Additive</div>
-      <h2>Cleaner fuel<br>from the first pour.</h2>
-      <p>Treated diesel resists contamination and waxing before it ever reaches the engine.</p>
+      <div class="kick">Delivered treated</div>
+      <h2>Your tank, filled.<br>Nothing to run.</h2>
+      <p>We supply the tank, deliver the diesel and dose the additive into every fill. It sits where your trucks park, on its own power.</p>
     </div>
 
     <div class="beat beat--left" data-in="0.32" data-peak="0.385" data-out="0.45">
-      <div class="kick">Through the whole system</div>
-      <h2>Injectors and filters,<br>protected.</h2>
-      <p>Detergent chemistry keeps lines, filters and injectors free of deposits, delivery after delivery.</p>
+      <div class="kick">The additive is in</div>
+      <h2>The gold line<br>is the additive.</h2>
+      <p>Blended into the stream as your tank fills, dosed to the litre. You never buy it, measure it or think about it.</p>
     </div>
 
     <div class="beat beat--left" data-in="0.50" data-peak="0.565" data-out="0.63">
-      <div class="kick">Inside the engine</div>
-      <h2>A stronger,<br>cleaner burn.</h2>
-      <p>Improved combustion means full power from every litre, with less smoke and less wear.</p>
+      <div class="kick">Inside the cab</div>
+      <h2>Full power from<br>every litre.</h2>
+      <p>Cleaner burn, protected injectors and filters, less smoke and less wear from the same tank of diesel.</p>
     </div>
 
     <div class="beat beat--left" data-in="0.68" data-peak="0.745" data-out="0.81">
-      <div class="kick">The result</div>
-      <h2>More kilometres<br>per tank.</h2>
-      <p>Fleets running treated diesel go further between fills. That is the whole point.</p>
+      <div class="kick">Treated versus untreated</div>
+      <h2>One truck runs<br>the gold line.</h2>
+      <p>Fleets on treated diesel go further between fills and pull past the ones that are not. That is the whole point.</p>
     </div>
 
     <div class="beat beat--finale" data-in="0.87" data-peak="0.95" data-out="2">
@@ -1361,17 +1361,16 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
 
 <script>
 /* ================= CONFIG (assemble step overwrites) ================= */
-var FRAME_DIR = 'assets/frames/';
-var FRAME_COUNT = 601;            /* set after head-trim */
+var FRAME_DIR = 'assets/film2/';
+var FRAME_COUNT = 484;            /* THE GOLD LINE: 4 chapters at 24fps */
 var FRAME_PAD = 4;
-var FRAME_VER = '6';              /* bump on every frame swap — busts cached 404s */
-var SEAM = '#241910';             /* sampled final-frame colour, set by assemble */
+var FRAME_VER = '7';              /* bump on every frame swap — busts cached 404s */
+var SEAM = '#2e1e1d';             /* sampled final-frame colour, set by assemble */
 var CHAPTERS = [
-  {at:0.00, label:'01 — THE DROP'},
-  {at:0.20, label:'02 — THE CLEAN'},
-  {at:0.40, label:'03 — THE LINE'},
-  {at:0.58, label:'04 — THE BURN'},
-  {at:0.74, label:'05 — THE LONG ROAD'}
+  {at:0.00, label:'01 — THE YARD'},
+  {at:0.25, label:'02 — THE LINE'},
+  {at:0.50, label:'03 — THE DASH'},
+  {at:0.75, label:'04 — THE PASS'}
 ];
 
 document.documentElement.style.setProperty('--seam', SEAM);
