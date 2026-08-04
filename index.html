@@ -202,7 +202,7 @@ header.on-light .head-phone{text-shadow:none}
    circulating. Full-bleed video with an overlaid title block.
    ========================================================= */
 #xray{position:relative;display:block;min-height:0;padding:0;background:var(--film-deep);overflow:hidden}
-#xray video{display:block;width:100%;height:min(96svh,860px);object-fit:cover}
+#xray video,#xray .xray-art{display:block;width:100%;height:min(96svh,860px);object-fit:cover}
 #xray .xray-scrim{position:absolute;inset:0;background:linear-gradient(120deg,rgba(5,8,24,.78) 0%,rgba(5,8,24,.28) 45%,transparent 70%);pointer-events:none}
 #xray .xray-copy{position:absolute;left:clamp(22px,6vw,90px);top:50%;transform:translateY(-50%);max-width:520px}
 #xray .kick-c{color:var(--gold-hot)}
@@ -218,7 +218,7 @@ header.on-light .head-phone{text-shadow:none}
   /* show the film at its natural ratio so the diagram labels stay
      legible and never crop; copy sits below instead of overlaying */
   #xray{padding-bottom:40px}
-  #xray video{height:auto;aspect-ratio:16/9}
+  #xray video,#xray .xray-art{height:auto;aspect-ratio:16/9}
   #xray .xray-scrim{display:none}
   #xray .xray-copy{position:static;transform:none;max-width:none;padding:30px 20px 0}
   #xray .xray-tag{display:none}
@@ -895,14 +895,14 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
 
   <!-- ================== X-RAY markup ================== -->
   <section id="xray">
-    <video src="assets/xray-loop.mp4" poster="assets/xray-poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
+    <img class="xray-art" src="assets/xray-k200.jpg?v=1" alt="X-ray of a Kenworth K200: diesel tank under the cab door, engine and combustion beneath the cab floor" loading="lazy">
     <div class="xray-scrim"></div>
     <div class="xray-copy">
       <div class="kick-c">The additive advantage</div>
       <h2 class="display">See inside<br>every litre.</h2>
       <p class="xray-sub">Additive-treated diesel in circulation: cleaner injectors, a cleaner burn, more kilometres from every tank.</p>
     </div>
-    <div class="xray-tag">X-RAY — FUEL CIRCUIT / LIVE</div>
+    <div class="xray-tag">X-RAY — K200 FUEL CIRCUIT</div>
   </section>
   <!-- ================ end X-RAY markup ================ -->
 
