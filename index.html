@@ -39,12 +39,12 @@ a{color:inherit;text-decoration:none}
 #loadpct{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.28em;color:var(--silver)}
 
 /* ============ HEADER ============ */
-header{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px clamp(20px,4vw,44px);display:flex;align-items:center;justify-content:space-between;color:#fff;transition:color .4s ease}
+header{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px clamp(20px,4vw,44px) 18px clamp(22px,6vw,90px);display:flex;align-items:center;justify-content:space-between;color:#fff;transition:color .4s ease}
 header::before{content:"";position:absolute;inset:0 0 auto 0;height:190%;z-index:-1;background:linear-gradient(to bottom,rgba(5,8,24,.66),rgba(5,8,24,0));pointer-events:none;transition:opacity .4s ease}
 header.on-light{color:var(--ink)}
 header.on-light::before{opacity:0}
-.brand img{width:128px;filter:drop-shadow(0 1px 12px rgba(0,0,0,.5)) brightness(0) invert(1);transition:filter .4s ease}
-header.on-light .brand img{filter:none}
+.brand img{width:min(300px,56vw);filter:drop-shadow(0 2px 18px rgba(0,0,0,.45)) brightness(0) invert(1);transition:filter .4s ease,width .4s ease}
+header.on-light .brand img{filter:none;width:128px}
 .head-right{display:flex;align-items:center;gap:26px}
 .head-phone{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;text-shadow:0 1px 16px rgba(0,0,0,.45)}
 header.on-light .head-phone{text-shadow:none}
@@ -63,8 +63,8 @@ header.on-light .head-phone{text-shadow:none}
 @keyframes cue{0%,100%{transform:rotate(45deg) translate(0,0);opacity:.55}50%{transform:rotate(45deg) translate(4px,4px);opacity:1}}
 
 /* ============ FILM ============ */
-#film-scroll{position:relative;height:880vh}
-#stage{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--film-deep) url('assets/film2/f_0001.jpg?v=13') center/cover no-repeat}
+#film-scroll{position:relative;height:698vh}
+#stage{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--film-deep) url('assets/film2/f_0001.jpg?v=17') center/cover no-repeat}
 #film{position:absolute;inset:0;width:100%;height:100%}
 #grain{position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:overlay}
 #vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 90% at 50% 45%,transparent 55%,rgba(3,5,16,.52) 100%)}
@@ -753,13 +753,13 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
 @media (max-width:920px){
   .head-phone{display:none}
   .beat--finale{bottom:10vh}
-  #film-scroll{height:780vh}
+  #film-scroll{height:619vh}
 }
 @media (max-width:560px){
   .beat h2{font-size:clamp(38px,11vw,54px)}
   .beat::before{inset:-40% -20% -40% -12%;background:radial-gradient(80% 70% at 35% 50%,rgba(4,6,18,.78),rgba(4,6,18,.45) 55%,transparent 82%)}
   .beat p{font-size:14px}
-  .beat--hero .wordmark{width:min(240px,62vw)}
+  .brand img{width:min(240px,62vw)}
   .beat--finale{bottom:12vh}
 }
 @media (prefers-reduced-motion: reduce){
@@ -797,37 +797,24 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
     <canvas id="grain"></canvas>
     <div id="vignette"></div>
 
-    <div class="beat beat--hero" data-in="-0.1" data-peak="0" data-out="0.085">
-      <img class="wordmark" src="assets/logo.png" alt="Fuel 2 Go">
+    <div class="beat beat--hero" data-in="-0.1" data-peak="0" data-out="0.127">
       <h2>One drop in<br>every litre.</h2>
       <p>Fuel2Go Diesel Additive, blended into every delivery of diesel we make across Australia and New Zealand.</p>
     </div>
 
-    <div class="beat beat--left" data-in="0.14" data-peak="0.205" data-out="0.27">
+    <div class="beat beat--left" data-in="0.208" data-peak="0.305" data-out="0.424">
       <div class="kick">Delivered treated</div>
       <h2>Your tank, filled.<br>Nothing to run.</h2>
       <p>We supply the tank, deliver the diesel and dose the additive into every fill. It sits where your trucks park, on its own power.</p>
     </div>
 
-    <div class="beat beat--left" data-in="0.32" data-peak="0.385" data-out="0.45">
+    <div class="beat beat--left" data-in="0.548" data-peak="0.699" data-out="0.830">
       <div class="kick">On the road</div>
       <h2>Loaded, treated,<br>rolling.</h2>
       <p>Every delivery leaves the depot already dosed at the tank. Nothing for your driver to carry, nothing to remember.</p>
     </div>
 
-    <div class="beat beat--left" data-in="0.50" data-peak="0.565" data-out="0.63">
-      <div class="kick">Inside the engine</div>
-      <h2>A cleaner,<br>stronger burn.</h2>
-      <p>Treated diesel burns cleaner and harder, full power from every litre with less smoke and less wear.</p>
-    </div>
-
-    <div class="beat beat--left" data-in="0.68" data-peak="0.745" data-out="0.81">
-      <div class="kick">Treated versus untreated</div>
-      <h2>One truck runs<br>the gold line.</h2>
-      <p>Fleets on treated diesel go further between fills and pull past the ones that are not. That is the whole point.</p>
-    </div>
-
-    <div class="beat beat--finale" data-in="0.87" data-peak="0.95" data-out="2">
+    <div class="beat beat--finale" data-in="0.874" data-peak="0.950" data-out="2">
       <div class="kick">Diesel, delivered treated</div>
       <h2>The long road<br>is ours.</h2>
       <div class="cta-row">
@@ -1292,15 +1279,13 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
 <script>
 /* ================= CONFIG (assemble step overwrites) ================= */
 var FRAME_DIR = 'assets/film2/';
-var FRAME_COUNT = 484;            /* THE GOLD LINE: 4 chapters at 24fps */
+var FRAME_COUNT = 384;            /* THE GOLD LINE: 2 chapters at 24fps, film ends on the open road */
 var FRAME_PAD = 4;
-var FRAME_VER = '13';              /* bump on every frame swap — busts cached 404s */
-var SEAM = '#291c1b';             /* sampled final-frame colour, set by assemble */
+var FRAME_VER = '17';              /* bump on every frame swap — busts cached 404s */
+var SEAM = '#4a3422';             /* sampled final-frame colour, set by assemble */
 var CHAPTERS = [
   {at:0.00, label:'01 — THE YARD'},
-  {at:0.25, label:'02 — THE ROAD'},
-  {at:0.50, label:'03 — THE BURN'},
-  {at:0.75, label:'04 — THE PASS'}
+  {at:0.3724, label:'02 — THE ROAD'}
 ];
 
 document.documentElement.style.setProperty('--seam', SEAM);
@@ -1507,6 +1492,7 @@ function tick(now){
   var gap = target - current;
   if (gap > 60) current = target - 60;
   else if (gap < -60) current = target + 60;
+  { const __gap = target - current; if (Math.abs(__gap) > 36) current = target - Math.sign(__gap) * 8; }
   current += (target - current) * 0.14;
   var idx = Math.max(0, Math.min(FRAME_COUNT - 1, Math.round(current)));
   ensureBitmaps(idx);
