@@ -104,6 +104,15 @@ header.on-light .head-phone{text-shadow:none}
 .section.in .stag > *:nth-child(2){transition-delay:.12s}
 .section.in .stag > *:nth-child(3){transition-delay:.24s}
 
+/* ============ FILM (Fyrex explainer) ============ */
+#explainer{background:var(--ink);color:var(--ivory)}
+#explainer .kick-c{color:var(--gold-hot)}
+#explainer .lede{color:rgba(244,243,239,.82);max-width:640px}
+.film-embed{position:relative;margin-top:34px;aspect-ratio:16/9;background:#000;border:1px solid rgba(244,243,239,.18);overflow:hidden}
+.film-embed video{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover}
+.film-note{margin-top:14px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(244,243,239,.55)}
+@media (max-width:560px){.film-embed{margin-top:22px;margin-left:-22px;margin-right:-22px;border-left:0;border-right:0}}
+
 
 
 /* services */
@@ -823,63 +832,6 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
 <div id="content">
   <div id="landing"></div>
 
-  <!-- ================== SERVICE PILLARS markup ================== -->
-  <section id="services">
-    <div class="pillar-pin">
-      <div class="pillar-track" id="pillarTrack">
-
-        <article class="pillar pillar--ink">
-          <div class="pillar-grid">
-            <div>
-              <span class="pillar-chip">Service 01 of 03</span>
-              <h3 class="pillar-word">Delivery</h3>
-              <div class="pillar-sub">Diesel fuel delivery</div>
-              <div class="pillar-quip">Supply and delivery of additive-treated diesel fuel direct to your site, on your schedule.</div>
-              <div class="pillar-count">Scroll — 01 / 03</div>
-            </div>
-            <figure class="pillar-fig">
-              <img src="assets/svc-delivery.jpg" alt="Fuel2Go tanker delivering diesel at dusk" loading="lazy">
-              <span class="fig-chip">On schedule</span>
-            </figure>
-          </div>
-        </article>
-
-        <article class="pillar pillar--gold">
-          <div class="pillar-grid">
-            <div>
-              <span class="pillar-chip">Service 02 of 03</span>
-              <h3 class="pillar-word">Storage</h3>
-              <div class="pillar-sub">Onsite tank installation</div>
-              <div class="pillar-quip">Diesel tanks installed and tailored to your operation's needs. Conditions apply.</div>
-              <div class="pillar-count">Scroll — 02 / 03</div>
-            </div>
-            <figure class="pillar-fig">
-              <img src="assets/svc-storage.jpg" alt="Containerised diesel tank installed onsite" loading="lazy">
-              <span class="fig-chip">Self-bunded</span>
-            </figure>
-          </div>
-        </article>
-
-        <article class="pillar pillar--ivory">
-          <div class="pillar-grid">
-            <div>
-              <span class="pillar-chip">Service 03 of 03</span>
-              <h3 class="pillar-word">Hire</h3>
-              <div class="pillar-sub">Tank hire and rent-to-own</div>
-              <div class="pillar-quip">Flexible storage for short or long-term projects, from hire to ownership.</div>
-              <div class="pillar-count">Scroll — 03 / 03</div>
-            </div>
-            <figure class="pillar-fig">
-              <img src="assets/svc-hire.jpg" alt="Fuel2Go tank fleet ready for hire" loading="lazy">
-              <span class="fig-chip">Hire to own</span>
-            </figure>
-          </div>
-        </article>
-
-      </div>
-    </div>
-  </section>
-  <!-- ================ end SERVICE PILLARS markup ================ -->
 
   <!-- ================== X-RAY markup ================== -->
   <section id="xray">
@@ -1058,6 +1010,19 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
   </div>
 </section>
 
+  <!-- ================== FILM: Fyrex explainer ================== -->
+  <section class="section" id="explainer">
+    <div class="wrap-c">
+      <div class="kick-c">Inside every litre</div>
+      <h2 class="display">Why treated diesel<br>runs cleaner.</h2>
+      <p class="lede">Fyrex CI is the additive we dose into every delivery. Two minutes on what it does inside a high-pressure injection system, and why that matters for your fleet.</p>
+      <div class="film-embed">
+        <video src="assets/fyrex.mp4" poster="assets/fyrex-poster.jpg" controls playsinline preload="metadata" aria-label="Fyrex CI diesel additive explainer"></video>
+      </div>
+      <div class="film-note">Fyrex CI, Australian made, recognised under the Emissions Reduction Fund</div>
+    </div>
+  </section>
+
   <!-- ================== SAVINGS CALCULATOR ================== -->
   <section class="section" id="calc">
     <div class="wrap-c">
@@ -1192,7 +1157,6 @@ footer{background:var(--film-deep);color:var(--ivory);padding:70px clamp(22px,6v
       <div>
         <h4>Quick Links</h4>
         <ul>
-          <li><a href="#services">Our Services</a></li>
           <li><a href="#industries">Industries</a></li>
           <li><a href="#apply">Open an Account</a></li>
           <li><a href="#" data-drawer>Enquire</a></li>
@@ -1910,30 +1874,6 @@ document.querySelectorAll('.section').forEach(function(s){ io.observe(s); });
   }
 }());
 
-/* ---------- service pillars (horizontal scroll) ---------- */
-(function(){
-  var sec = document.getElementById('services');
-  var track = document.getElementById('pillarTrack');
-  if (!sec || !track) return;
-  var queued = false;
-
-  function clamp01(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
-
-  function update(){
-    queued = false;
-    var r = sec.getBoundingClientRect();
-    var span = r.height - window.innerHeight;
-    var p = span > 0 ? clamp01(-r.top / span) : 0;
-    var travel = track.scrollWidth - window.innerWidth;
-    track.style.transform = 'translate3d(' + (-p * travel) + 'px,0,0)';
-  }
-
-  function onScroll(){ if (!queued){ queued = true; requestAnimationFrame(update); } }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
-  update();
-})();
 
 /* ---------- boot ---------- */
 var booted = false;
