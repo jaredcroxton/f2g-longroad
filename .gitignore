@@ -1,3 +1,5 @@
 .vercel
 .DS_Store
 .tmp/
+_harness.html
+_variants.html
